@@ -79,6 +79,14 @@ class DcMotorComponent(JNTComponent):
                 product_name=product_name, product_type=product_type, product_manufacturer="Janitoo", **kwargs)
         logger.debug("[%s] - __init__ node uuid:%s", self.__class__.__name__, self.uuid)
 
+    def check_heartbeat(self):
+        """Check that the component is 'available'
+
+        """
+        if 'temperature' not in self.values:
+            return False
+        return self.values['temperature'].data is not None
+
 class StepMotorComponent(JNTComponent):
     """ A generic component for gpio """
 
@@ -94,6 +102,14 @@ class StepMotorComponent(JNTComponent):
                 product_name=product_name, product_type=product_type, product_manufacturer="Janitoo", **kwargs)
         logger.debug("[%s] - __init__ node uuid:%s", self.__class__.__name__, self.uuid)
 
+    def check_heartbeat(self):
+        """Check that the component is 'available'
+
+        """
+        if 'temperature' not in self.values:
+            return False
+        return self.values['temperature'].data is not None
+
 class LedComponent(JNTComponent):
     """ A generic component for gpio """
 
@@ -108,3 +124,11 @@ class LedComponent(JNTComponent):
         JNTComponent.__init__(self, oid=oid, bus=bus, addr=addr, name=name,
                 product_name=product_name, product_type=product_type, product_manufacturer="Janitoo", **kwargs)
         logger.debug("[%s] - __init__ node uuid:%s", self.__class__.__name__, self.uuid)
+
+    def check_heartbeat(self):
+        """Check that the component is 'available'
+
+        """
+        if 'temperature' not in self.values:
+            return False
+        return self.values['temperature'].data is not None
