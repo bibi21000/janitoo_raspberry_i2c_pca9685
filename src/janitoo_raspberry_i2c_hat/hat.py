@@ -39,7 +39,10 @@ from janitoo.value import JNTValue
 from janitoo.component import JNTComponent
 from janitoo_raspberry_i2c.bus_i2c import I2CBus
 
-from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor
+try:
+    from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor
+except IOError:
+    print 'Import error'
 
 ##############################################################
 #Check that we are in sync with the official command classes
