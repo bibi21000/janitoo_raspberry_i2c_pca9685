@@ -44,10 +44,6 @@ from janitoo.component import JNTComponent
 from janitoo.thread import BaseThread
 from janitoo.options import get_option_autostart
 
-try:
-    from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor
-except IOError:
-    print 'Import error'
 
 ##############################################################
 #Check that we are in sync with the official command classes
@@ -96,6 +92,7 @@ class MotorHatBus(JNTBus):
             logger.exception('Exception when intialising HAT board')
 
     def stop(self):
+        JNTBus.stop(self)
         if self.hatboard is not None:
             for m in range(1,5):
                 try:
@@ -103,7 +100,6 @@ class MotorHatBus(JNTBus):
                 except:
                     logger.exception('Exception when releasing all devices')
         self.hatboard = None
-        JNTBus.stop(self)
 
 
     def check_heartbeat(self):
