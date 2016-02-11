@@ -50,7 +50,11 @@ except IOError:
 from janitoo.classes import COMMAND_DESC
 
 COMMAND_MOTOR = 0x3100
+COMMAND_SWITCH_MULTILEVEL = 0x0026
+COMMAND_SWITCH_BINARY = 0x0025
 
+assert(COMMAND_DESC[COMMAND_SWITCH_MULTILEVEL] == 'COMMAND_SWITCH_MULTILEVEL')
+assert(COMMAND_DESC[COMMAND_SWITCH_BINARY] == 'COMMAND_SWITCH_BINARY')
 assert(COMMAND_DESC[COMMAND_MOTOR] == 'COMMAND_MOTOR')
 ##############################################################
 
@@ -63,13 +67,13 @@ def make_led(**kwargs):
 def make_stepmotor(**kwargs):
     return StepMotorComponent(**kwargs)
 
-class DcMotorComponent(JNTComponent):
+class DcMotorComponent(JNTComponent,):
     """ A generic component for gpio """
 
     def __init__(self, bus=None, addr=None, **kwargs):
         """
         """
-        oid = kwargs.pop('oid', 'rpii2c.dcmotor')
+        oid = kwargs.pop('oid', 'rpii2chat.dcmotor')
         name = kwargs.pop('name', "Motor")
         product_name = kwargs.pop('product_name', "Motor")
         product_type = kwargs.pop('product_type', "DC Motor")
@@ -77,20 +81,6 @@ class DcMotorComponent(JNTComponent):
         JNTComponent.__init__(self, oid=oid, bus=bus, addr=addr, name=name,
                 product_name=product_name, product_type=product_type, product_manufacturer="Janitoo", **kwargs)
         logger.debug("[%s] - __init__ node uuid:%s", self.__class__.__name__, self.uuid)
-        uuid="label"
-        self.values[uuid] = self.value_factory['config_string'](options=self.options, uuid=uuid,
-            node_uuid=self.uuid,
-            help='A user friendly label for the motor',
-            label='Label',
-            default="Motor",
-        )
-        uuid="hexadd"
-        self.values[uuid] = self.value_factory['config_string'](options=self.options, uuid=uuid,
-            node_uuid=self.uuid,
-            help='The I2C address of the motor HAT board',
-            label='Addr',
-            default="0x60",
-        )
         uuid="speed"
         self.values[uuid] = self.value_factory['config_byte'](options=self.options, uuid=uuid,
             node_uuid=self.uuid,
@@ -102,9 +92,9 @@ class DcMotorComponent(JNTComponent):
         uuid="max_speed"
         self.values[uuid] = self.value_factory['config_byte'](options=self.options, uuid=uuid,
             node_uuid=self.uuid,
-            help='The max speed supported by the motor. Some mo. A byte from 0 to 255',
+            help="The max speed supported by the motor. Some motor doesn't seems support 100% PWM. A byte from 0 to 255",
             label='Speed',
-            default="255",
+            default=255,
         )
         uuid="num"
         self.values[uuid] = self.value_factory['config_byte'](options=self.options, uuid=uuid,
@@ -131,7 +121,6 @@ class DcMotorComponent(JNTComponent):
             label='CSpeed',
             get_data_cb=self.get_current_speed,
         )
-        self.hatboard = None
 
     def get_current_speed(self, node_uuid, index):
         """Get the current speed
@@ -148,85 +137,38 @@ class DcMotorComponent(JNTComponent):
         """Set the speed ot the motor
         """
         self.values['speed'].set_data_index(index=index, data=data)
-        self._speed(index, data)
+        try:
+            m = self.values['num'].get_data_index(index=index)
+            if m is not None:
+                self._bus.hatboard.getMotor(m).setSpeed(data)
+        except:
+            logger.exception('Exception when setting speed')
 
     def set_action(self, node_uuid, index, data):
         """Act on the motor
         """
         params = {}
         if data == "forward":
-            self._forward(index)
+            try:
+                m = self.values['num'].get_data_index(index=index)
+                if m is not None:
+                    self._bus.hatboard.getMotor(m).run(Adafruit_MotorHAT.FORWARD)
+            except:
+                logger.exception('Exception when running forward')
         elif data == "backward":
-            self._backward(index)
+            try:
+                m = self.values['num'].get_data_index(index=index)
+                if m is not None:
+                    self._bus.hatboard.getMotor(m).run(Adafruit_MotorHAT.BACKWARD)
+            except:
+                logger.exception('Exception when running backward')
         elif data == "release":
-            self._release(index)
-
-    def _speed(self, index, data):
-        """Change the speed of the DC motor"""
-        try:
-            m = self.values['num'].get_data_index(index=index)
-            if m is not None:
-                self.hatboard.getMotor(m).setSpeed(data)
-        except:
-            logger.exception('Exception when setting speed')
-
-    def _forward(self, index):
-        """Forward the DC motor"""
-        try:
-            m = self.values['num'].get_data_index(index=index)
-            if m is not None:
-                self.hatboard.getMotor(m).run(Adafruit_MotorHAT.FORWARD)
-        except:
-            logger.exception('Exception when running forward')
-
-    def _backward(self, index):
-        """Backward the DC motor"""
-        try:
-            m = self.values['num'].get_data_index(index=index)
-            if m is not None:
-                self.hatboard.getMotor(m).run(Adafruit_MotorHAT.BACKWARD)
-        except:
-            logger.exception('Exception when running backward')
-
-    def _release(self, index):
-        """Release the DC motor. If index == -1 release all motors"""
-        if index == -1:
-            for m in range(1,5):
-                try:
-                    self.hatboard.getMotor(m).run(Adafruit_MotorHAT.RELEASE)
-                except:
-                    logger.exception('Exception when releasing all motors')
-        else:
             m = self.values['num'].get_data_index(index=index)
             if m is not None:
                 try:
-                    self.hatboard.getMotor(m).run(Adafruit_MotorHAT.RELEASE)
+                    self._bus.hatboard.getMotor(m).run(Adafruit_MotorHAT.RELEASE)
                 except:
                     logger.exception('Exception when releasing one motor %s'%m)
-
-    def check_heartbeat(self):
-        """Check that the component is 'available'
-
-        """
-        return self.hatboard is not None
-
-    def start(self, mqttc):
-        """Start the component.
-
-        """
-        self.hatboard = Adafruit_MotorHAT(addr=self.values['hexadd'])
-        JNTComponent.start(self, mqttc)
-        self._release(-1)
-        return True
-
-    def stop(self):
-        """Stop the component.
-
-        """
-        self._release(-1)
-        JNTComponent.stop(self)
-        return True
-
 
 class StepMotorComponent(JNTComponent):
     """ A generic component for gpio """
@@ -234,7 +176,7 @@ class StepMotorComponent(JNTComponent):
     def __init__(self, bus=None, addr=None, **kwargs):
         """
         """
-        oid = kwargs.pop('oid', 'rpii2c.stepmotor')
+        oid = kwargs.pop('oid', 'rpii2chat.stepmotor')
         name = kwargs.pop('name', "Motor")
         product_name = kwargs.pop('product_name', "Motor")
         product_type = kwargs.pop('product_type', "Step Motor")
@@ -243,21 +185,13 @@ class StepMotorComponent(JNTComponent):
                 product_name=product_name, product_type=product_type, product_manufacturer="Janitoo", **kwargs)
         logger.debug("[%s] - __init__ node uuid:%s", self.__class__.__name__, self.uuid)
 
-    def check_heartbeat(self):
-        """Check that the component is 'available'
-
-        """
-        if 'temperature' not in self.values:
-            return False
-        return self.values['temperature'].data is not None
-
 class LedComponent(JNTComponent):
     """ A generic component for gpio """
 
     def __init__(self, bus=None, addr=None, **kwargs):
         """
         """
-        oid = kwargs.pop('oid', 'rpii2c.led')
+        oid = kwargs.pop('oid', 'rpii2chat.led')
         name = kwargs.pop('name', "Motor")
         product_name = kwargs.pop('product_name', "LED")
         product_type = kwargs.pop('product_type', "LED Driver")
@@ -265,11 +199,72 @@ class LedComponent(JNTComponent):
         JNTComponent.__init__(self, oid=oid, bus=bus, addr=addr, name=name,
                 product_name=product_name, product_type=product_type, product_manufacturer="Janitoo", **kwargs)
         logger.debug("[%s] - __init__ node uuid:%s", self.__class__.__name__, self.uuid)
+        uuid="level"
+        self.values[uuid] = self.value_factory['action_byte'](options=self.options, uuid=uuid,
+            node_uuid=self.uuid,
+            help='The level of the LED. A byte from 0 to 255',
+            label='Level',
+            default=0,
+            cmd_class=COMMAND_SWITCH_MULTILEVEL,
+            set_data_cb=self.set_level,
+        )
+        uuid="max_level"
+        self.values[uuid] = self.value_factory['config_byte'](options=self.options, uuid=uuid,
+            node_uuid=self.uuid,
+            help="The max level supported by the LED. Some LED doesn't seems support 100% PWM. A byte from 0 to 255",
+            label='Max level',
+            default=255,
+        )
+        uuid="num"
+        self.values[uuid] = self.value_factory['config_byte'](options=self.options, uuid=uuid,
+            node_uuid=self.uuid,
+            help='The number of the LED on the Hat board. A byte from 1 to 4',
+            label='Num.',
+        )
+        uuid="switch"
+        self.values[uuid] = self.value_factory['action_list'](options=self.options, uuid=uuid,
+            node_uuid=self.uuid,
+            help='To switch the LED',
+            label='Switch',
+            list_items=['on', 'off'],
+            default='off',
+            set_data_cb=self.set_switch,
+            cmd_class=COMMAND_SWITCH_BINARY,
+            genre=0x01,
+        )
 
-    def check_heartbeat(self):
-        """Check that the component is 'available'
-
+    def set_level(self, node_uuid, index, data):
+        """Set the level ot the LED
         """
-        if 'temperature' not in self.values:
-            return False
-        return self.values['temperature'].data is not None
+        self.values['level'].set_data_index(index=index, data=data)
+        m = self.values['num'].get_data_index(index=index)
+        if m is not None:
+            try:
+                self._bus.hatboard.getMotor(m).setSpeed(data)
+                if data == 0:
+                    self._bus.hatboard.getMotor(m).run(Adafruit_MotorHAT.RELEASE)
+                else:
+                    self._bus.hatboard.getMotor(m).run(Adafruit_MotorHAT.FORWARD)
+            except:
+                logger.exception('Exception when setting level')
+
+    def set_switch(self, node_uuid, index, data):
+        """Switch On/Off the led
+        """
+        params = {}
+        if data == "on":
+            try:
+                m = self.values['num'].get_data_index(index=index)
+                if m is not None:
+                    self._bus.hatboard.getMotor(m).setSpeed(self.values['max_level'].get_data_index(index=index))
+                    self._bus.hatboard.getMotor(m).run(Adafruit_MotorHAT.FORWARD)
+            except:
+                logger.exception('Exception when running forward')
+        elif data == "off":
+            try:
+                m = self.values['num'].get_data_index(index=index)
+                if m is not None:
+                    self._bus.hatboard.getMotor(m).setSpeed(0)
+                    self._bus.hatboard.getMotor(m).run(Adafruit_MotorHAT.RELEASE)
+            except:
+                logger.exception('Exception when running forward')

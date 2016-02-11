@@ -56,15 +56,15 @@ assert(COMMAND_DESC[COMMAND_DISCOVERY] == 'COMMAND_DISCOVERY')
 class TestLedComponent(JNTTComponent, JNTTComponentCommon):
     """Test the component
     """
-    component_name = "rpii2c.led"
+    component_name = "rpii2chat.led"
 
 class TestDcMotorComponent(JNTTComponent, JNTTComponentCommon):
     """Test the component
     """
-    component_name = "rpii2c.dcmotor"
+    component_name = "rpii2chat.dcmotor"
 
 class TestStepMotorComponent(JNTTComponent, JNTTComponentCommon):
     """Test the component
     """
-    component_name = "rpii2c.stepmotor"
+    component_name = "rpii2chat.stepmotor"
 

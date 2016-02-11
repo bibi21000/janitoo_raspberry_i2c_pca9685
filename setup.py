@@ -57,10 +57,13 @@ data_files_config(data_files, 'docs','src/docs/','*')
 #You must define a variable like the one below.
 #It will be used to collect entries without installing the package
 janitoo_entry_points = {
+    "janitoo.threads": [
+        "rpii2chat = janitoo_raspberry_i2c_hat.thread_hat:make_thread",
+    ],
     "janitoo.components": [
-        "rpii2c.dcmotor = janitoo_raspberry_i2c_hat.hat:make_dcmotor",
-        "rpii2c.stepmotor = janitoo_raspberry_i2c_hat.hat:make_stepmotor",
-        "rpii2c.led = janitoo_raspberry_i2c_hat.hat:make_led",
+        "rpii2chat.dcmotor = janitoo_raspberry_i2c_hat.hat:make_dcmotor",
+        "rpii2chat.stepmotor = janitoo_raspberry_i2c_hat.hat:make_stepmotor",
+        "rpii2chat.led = janitoo_raspberry_i2c_hat.hat:make_led",
     ],
 }
 
