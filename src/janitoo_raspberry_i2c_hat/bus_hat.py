@@ -44,6 +44,7 @@ from janitoo.component import JNTComponent
 from janitoo.thread import BaseThread
 from janitoo.options import get_option_autostart
 
+from janitoo_raspberry_i2c_hat.thread_hat import OID
 
 ##############################################################
 #Check that we are in sync with the official command classes
@@ -64,13 +65,13 @@ assert(COMMAND_DESC[COMMAND_CAMERA_STREAM] == 'COMMAND_CAMERA_STREAM')
 class MotorHatBus(JNTBus):
     """A pseudo-bus to handle the Raspberry Motor Hat board
     """
-    def __init__(self, **kwargs):
+    def __init__(self, oid=OID, **kwargs):
         """
         :param int bus_id: the SMBus id (see Raspberry Pi documentation)
         :param kwargs: parameters transmitted to :py:class:`smbus.SMBus` initializer
         """
         JNTBus.__init__(self, **kwargs)
-        uuid="hexadd"
+        uuid="%s_hexadd"%OID
         self.values[uuid] = self.value_factory['config_string'](options=self.options, uuid=uuid,
             node_uuid=self.uuid,
             help='The I2C address of the motor HAT board',
@@ -82,7 +83,7 @@ class MotorHatBus(JNTBus):
     def start(self, mqttc, trigger_thread_reload_cb=None):
         JNTBus.start(self, mqttc, trigger_thread_reload_cb)
         try:
-            self.hatboard = Adafruit_MotorHAT(addr=self.values['hexadd'].data)
+            self.hatboard = Adafruit_MotorHAT(addr=self.values["%s_hexadd"%OID].data)
             for m in range(1,5):
                 try:
                     self._bus.hatboard.getMotor(m).run(Adafruit_MotorHAT.RELEASE)

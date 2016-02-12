@@ -60,6 +60,8 @@ def make_thread(options):
     else:
         return None
 
+OID = 'rpii2chat'
+
 class MotorHatThread(JNTBusThread):
     """The basic thread
 
@@ -68,6 +70,6 @@ class MotorHatThread(JNTBusThread):
         """Build the bus
         """
         from janitoo_raspberry_i2c_hat.bus_hat import MotorHatBus
-        self.section = 'rpii2chat'
+        self.section = OID
         self.bus = MotorHatBus(options=self.options, oid=self.section, product_name="Raspberry Motor Hat board controller")
 
