@@ -65,7 +65,7 @@ assert(COMMAND_DESC[COMMAND_CAMERA_STREAM] == 'COMMAND_CAMERA_STREAM')
 class MotorHatBus(JNTBus):
     """A pseudo-bus to handle the Raspberry Motor Hat board
     """
-    def __init__(self, oid=OID, **kwargs):
+    def __init__(self, **kwargs):
         """
         :param int bus_id: the SMBus id (see Raspberry Pi documentation)
         :param kwargs: parameters transmitted to :py:class:`smbus.SMBus` initializer
