@@ -79,7 +79,7 @@ class TestPiSerser(JNTTServer, JNTTServerCommon):
         self.onlyRasperryTest()
         self.start()
         try:
-            time.sleep(60)
+            time.sleep(120)
             self.assertInLogfile('Found heartbeats in timeout')
             self.assertNotInLogfile('^ERROR ')
         finally:

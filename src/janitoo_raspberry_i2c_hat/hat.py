@@ -121,6 +121,8 @@ class DcMotorComponent(JNTComponent,):
             label='CSpeed',
             get_data_cb=self.get_current_speed,
         )
+        poll_value = self.values[uuid].create_poll_value(default=300)
+        self.values[poll_value.uuid] = poll_value
 
     def get_current_speed(self, node_uuid, index):
         """Get the current speed
@@ -208,6 +210,8 @@ class LedComponent(JNTComponent):
             cmd_class=COMMAND_SWITCH_MULTILEVEL,
             set_data_cb=self.set_level,
         )
+        poll_value = self.values[uuid].create_poll_value(default=300)
+        self.values[poll_value.uuid] = poll_value
         uuid="max_level"
         self.values[uuid] = self.value_factory['config_byte'](options=self.options, uuid=uuid,
             node_uuid=self.uuid,
