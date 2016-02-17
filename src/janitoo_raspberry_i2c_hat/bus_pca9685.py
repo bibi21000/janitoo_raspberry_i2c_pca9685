@@ -44,10 +44,10 @@ from janitoo.component import JNTComponent
 from janitoo.thread import BaseThread
 from janitoo.options import get_option_autostart
 
-from janitoo_raspberry_i2c_hat.thread_hat import OIDHAT
+from janitoo_raspberry_i2c_hat.thread_hat import OIDPCA9685
 
 try:
-    from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor
+    from Adafruit_MotorHAT.Adafruit_PWM_Servo_Driver import PWM
 except:
     logger.exception("Can't import Adafruit_MotorHAT")
 
@@ -67,8 +67,8 @@ assert(COMMAND_DESC[COMMAND_CAMERA_VIDEO] == 'COMMAND_CAMERA_VIDEO')
 assert(COMMAND_DESC[COMMAND_CAMERA_STREAM] == 'COMMAND_CAMERA_STREAM')
 ##############################################################
 
-class MotorHatBus(JNTBus):
-    """A pseudo-bus to handle the Raspberry Motor Hat board
+class Pca9685Bus(JNTBus):
+    """A pseudo-bus to handle the Raspberry pca9685 board
     """
     def __init__(self, **kwargs):
         """
@@ -76,40 +76,31 @@ class MotorHatBus(JNTBus):
         :param kwargs: parameters transmitted to :py:class:`smbus.SMBus` initializer
         """
         JNTBus.__init__(self, **kwargs)
-        uuid="%s_hexadd"%OIDHAT
+        uuid="%s_hexadd"%OIDPCA9685
         self.values[uuid] = self.value_factory['config_string'](options=self.options, uuid=uuid,
             node_uuid=self.uuid,
             help='The I2C address of the motor HAT board',
             label='Addr',
-            default="0x60",
+            default="0x40",
         )
         self.hatboard = None
 
     def start(self, mqttc, trigger_thread_reload_cb=None):
         JNTBus.start(self, mqttc, trigger_thread_reload_cb)
         try:
-            self.hatboard = Adafruit_MotorHAT(addr=self.values["%s_hexadd"%OIDHAT].data)
-            for m in range(1,5):
-                try:
-                    self._bus.hatboard.getMotor(m).run(Adafruit_MotorHAT.RELEASE)
-                except:
-                    logger.exception('Exception when releasing all devices')
+            self.pca9685 = pwm(address=self.values["%s_hexadd"%OIDPCA9685].data)
         except:
-            logger.exception('Exception when intialising HAT board')
+            logger.exception('Exception when intialising pca9685 board')
 
     def stop(self):
         JNTBus.stop(self)
-        if self.hatboard is not None:
-            for m in range(1,5):
-                try:
-                    self._bus.hatboard.getMotor(m).run(Adafruit_MotorHAT.RELEASE)
-                except:
-                    logger.exception('Exception when releasing all devices')
-        self.hatboard = None
+        if self.pca9685 is not None:
+            self.pca9685.softwareReset()
+        self.pca9685 = None
 
 
     def check_heartbeat(self):
         """Check that the bus is 'available'
 
         """
-        return self.hatboard is not None
+        return self.pca9685 is not None

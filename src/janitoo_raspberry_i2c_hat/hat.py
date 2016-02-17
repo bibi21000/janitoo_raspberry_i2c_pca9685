@@ -41,8 +41,8 @@ from janitoo_raspberry_i2c.bus_i2c import I2CBus
 
 try:
     from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor
-except IOError:
-    print 'Import error'
+except:
+    logger.exception("Can't import Adafruit_MotorHAT")
 
 ##############################################################
 #Check that we are in sync with the official command classes
@@ -67,8 +67,8 @@ def make_led(**kwargs):
 def make_stepmotor(**kwargs):
     return StepMotorComponent(**kwargs)
 
-class DcMotorComponent(JNTComponent,):
-    """ A generic component for gpio """
+class DcMotorComponent(JNTComponent):
+    """ A DC motor component for gpio """
 
     def __init__(self, bus=None, addr=None, **kwargs):
         """
@@ -79,7 +79,7 @@ class DcMotorComponent(JNTComponent,):
         product_type = kwargs.pop('product_type', "DC Motor")
         product_manufacturer = kwargs.pop('product_manufacturer', "Janitoo")
         JNTComponent.__init__(self, oid=oid, bus=bus, addr=addr, name=name,
-                product_name=product_name, product_type=product_type, product_manufacturer="Janitoo", **kwargs)
+                product_name=product_name, product_type=product_type, product_manufacturer=product_manufacturer, **kwargs)
         logger.debug("[%s] - __init__ node uuid:%s", self.__class__.__name__, self.uuid)
         uuid="speed"
         self.values[uuid] = self.value_factory['config_byte'](options=self.options, uuid=uuid,
@@ -173,7 +173,7 @@ class DcMotorComponent(JNTComponent,):
                     logger.exception('Exception when releasing one motor %s'%m)
 
 class StepMotorComponent(JNTComponent):
-    """ A generic component for gpio """
+    """ A stepper motor component"""
 
     def __init__(self, bus=None, addr=None, **kwargs):
         """
@@ -184,11 +184,11 @@ class StepMotorComponent(JNTComponent):
         product_type = kwargs.pop('product_type', "Step Motor")
         product_manufacturer = kwargs.pop('product_manufacturer', "Janitoo")
         JNTComponent.__init__(self, oid=oid, bus=bus, addr=addr, name=name,
-                product_name=product_name, product_type=product_type, product_manufacturer="Janitoo", **kwargs)
+                product_name=product_name, product_type=product_type, product_manufacturer=product_manufacturer, **kwargs)
         logger.debug("[%s] - __init__ node uuid:%s", self.__class__.__name__, self.uuid)
 
 class LedComponent(JNTComponent):
-    """ A generic component for gpio """
+    """ A led driver component"""
 
     def __init__(self, bus=None, addr=None, **kwargs):
         """
@@ -199,7 +199,7 @@ class LedComponent(JNTComponent):
         product_type = kwargs.pop('product_type', "LED Driver")
         product_manufacturer = kwargs.pop('product_manufacturer', "Janitoo")
         JNTComponent.__init__(self, oid=oid, bus=bus, addr=addr, name=name,
-                product_name=product_name, product_type=product_type, product_manufacturer="Janitoo", **kwargs)
+                product_name=product_name, product_type=product_type, product_manufacturer=product_manufacturer, **kwargs)
         logger.debug("[%s] - __init__ node uuid:%s", self.__class__.__name__, self.uuid)
         uuid="level"
         self.values[uuid] = self.value_factory['action_byte'](options=self.options, uuid=uuid,

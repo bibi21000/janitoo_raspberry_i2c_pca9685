@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""Unittests for Janitoo-Raspberry Pi Server.
+"""Unittests for Janitoo-Roomba Server.
 """
 __license__ = """
     This file is part of Janitoo.
@@ -32,15 +32,17 @@ from pkg_resources import iter_entry_points
 
 from janitoo_nosetests.server import JNTTServer, JNTTServerCommon
 from janitoo_nosetests.thread import JNTTThread, JNTTThreadCommon
+from janitoo_nosetests.component import JNTTComponent, JNTTComponentCommon
 
 from janitoo.utils import json_dumps, json_loads
 from janitoo.utils import HADD_SEP, HADD
-from janitoo.utils import TOPIC_HEARTBEAT, NETWORK_REQUESTS
+from janitoo.utils import TOPIC_HEARTBEAT
 from janitoo.utils import TOPIC_NODES, TOPIC_NODES_REPLY, TOPIC_NODES_REQUEST
 from janitoo.utils import TOPIC_BROADCAST_REPLY, TOPIC_BROADCAST_REQUEST
 from janitoo.utils import TOPIC_VALUES_USER, TOPIC_VALUES_CONFIG, TOPIC_VALUES_SYSTEM, TOPIC_VALUES_BASIC
 
-from janitoo_raspberry.server import PiServer
+import janitoo_raspberry_i2c_hat.bus_pca9685
+import janitoo_raspberry_i2c_hat.pca9685
 
 ##############################################################
 #Check that we are in sync with the official command classes
@@ -52,37 +54,8 @@ COMMAND_DISCOVERY = 0x5000
 assert(COMMAND_DESC[COMMAND_DISCOVERY] == 'COMMAND_DISCOVERY')
 ##############################################################
 
-class CommonPi():
-
-    def test_101_server_start_no_error_in_log(self):
-        self.onlyRasperryTest()
-        self.start()
-        try:
-            time.sleep(120)
-            self.assertInLogfile('Found heartbeats in timeout')
-            self.assertNotInLogfile('^ERROR ')
-        finally:
-            self.stop()
-
-class TestMotorHatSerser(JNTTServer, JNTTServerCommon):
-    """Test the pi server
+class TestPwmComponent(JNTTComponent, JNTTComponentCommon):
+    """Test the component
     """
-    loglevel = logging.DEBUG
-    path = '/tmp/janitoo_test'
-    broker_user = 'toto'
-    broker_password = 'toto'
-    server_class = PiServer
-    server_conf = "tests/data/janitoo_raspberry_i2c_hat.conf"
-    hadds = [HADD%(139,0), HADD%(139,1), HADD%(139,2)]
-
-class TestPca9685HatSerser(JNTTServer, JNTTServerCommon):
-    """Test the pi server
-    """
-    loglevel = logging.DEBUG
-    path = '/tmp/janitoo_test'
-    broker_user = 'toto'
-    broker_password = 'toto'
-    server_class = PiServer
-    server_conf = "tests/data/janitoo_raspberry_i2c_pca9685.conf"
-    hadds = [HADD%(140,0), HADD%(140,1)]
+    component_name = "rpii2cpca9685.pwm"
 

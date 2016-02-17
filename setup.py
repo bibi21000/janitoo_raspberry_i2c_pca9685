@@ -58,19 +58,23 @@ data_files_config(data_files, 'docs','src/docs/','*')
 #It will be used to collect entries without installing the package
 janitoo_entry_points = {
     "janitoo.threads": [
-        "rpii2chat = janitoo_raspberry_i2c_hat.thread_hat:make_thread",
+        "rpii2chat = janitoo_raspberry_i2c_hat.thread_hat:make_hat",
+        "rpii2cpca9685 = janitoo_raspberry_i2c_hat.thread_hat:make_pca9685",
     ],
     "janitoo.components": [
         "rpii2chat.dcmotor = janitoo_raspberry_i2c_hat.hat:make_dcmotor",
         "rpii2chat.stepmotor = janitoo_raspberry_i2c_hat.hat:make_stepmotor",
         "rpii2chat.led = janitoo_raspberry_i2c_hat.hat:make_led",
+        "rpii2cpca9685.pwm = janitoo_raspberry_i2c_hat.pca9685:make_pwm",
     ],
 }
 
 setup(
     name = 'janitoo_raspberry_i2c_hat',
-    description = "A server which handle many controller (hardware, onewire, i2c, ...) dedicated to the raspberry",
-    long_description = "A server which handle many controller (hardware, onewire, i2c, ...) dedicated to the raspberry",
+    description = "Use an adafruit motor hat with Janitoo",
+    long_description = """Provides components for DC motor, stepper motor, led driver and servo driver.
+    See https://github.com/adafruit/Adafruit-Motor-HAT-Python-Library
+    """,
     author='Sébastien GALLET aka bibi2100 <bibi21000@gmail.com>',
     author_email='bibi21000@gmail.com',
     url='http://bibi21000.gallet.info/',
@@ -94,7 +98,7 @@ setup(
     zip_safe = False,
     packages = find_packages('src', exclude=["scripts", "docs", "config"]),
     package_dir = { '': 'src' },
-    keywords = "raspberry,i2c,motor,led",
+    keywords = "raspberry,i2c,motor,led,adafruit,servo,pca9685,pwm",
     include_package_data=True,
     data_files = data_files,
     install_requires=[

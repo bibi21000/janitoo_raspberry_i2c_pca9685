@@ -54,13 +54,20 @@ COMMAND_CONTROLLER = 0x1050
 assert(COMMAND_DESC[COMMAND_CONTROLLER] == 'COMMAND_CONTROLLER')
 ##############################################################
 
-def make_thread(options):
+def make_hat(options):
     if get_option_autostart(options, 'rpii2chat') == True:
         return MotorHatThread(options)
     else:
         return None
 
-OID = 'rpii2chat'
+def make_pca9685(options):
+    if get_option_autostart(options, 'rpii2cpca9685') == True:
+        return Pca9685Thread(options)
+    else:
+        return None
+
+OIDHAT = 'rpii2chat'
+OIDPCA9685 = 'rpii2cpca9685'
 
 class MotorHatThread(JNTBusThread):
     """The basic thread
@@ -70,6 +77,17 @@ class MotorHatThread(JNTBusThread):
         """Build the bus
         """
         from janitoo_raspberry_i2c_hat.bus_hat import MotorHatBus
-        self.section = OID
+        self.section = OIDHAT
         self.bus = MotorHatBus(options=self.options, oid=self.section, product_name="Raspberry Motor Hat board controller")
+
+class Pca9685Thread(JNTBusThread):
+    """The basic thread
+
+    """
+    def init_bus(self):
+        """Build the bus
+        """
+        from janitoo_raspberry_i2c_hat.bus_pca9685 import Pca9685Bus
+        self.section = OIDPCA9685
+        self.bus = Pca9685(options=self.options, oid=self.section, product_name="Raspberry pca9685 board controller")
 
