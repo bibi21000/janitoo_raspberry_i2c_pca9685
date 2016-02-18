@@ -89,5 +89,5 @@ class Pca9685Thread(JNTBusThread):
         """
         from janitoo_raspberry_i2c_hat.bus_pca9685 import Pca9685Bus
         self.section = OIDPCA9685
-        self.bus = Pca9685(options=self.options, oid=self.section, product_name="Raspberry pca9685 board controller")
+        self.bus = Pca9685Bus(options=self.options, oid=self.section, product_name="Raspberry pca9685 board controller")
 

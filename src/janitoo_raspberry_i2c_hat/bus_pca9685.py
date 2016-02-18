@@ -83,7 +83,7 @@ class Pca9685Bus(JNTBus):
             label='Addr',
             default="0x40",
         )
-        self.hatboard = None
+        self.pca9685 = None
 
     def start(self, mqttc, trigger_thread_reload_cb=None):
         JNTBus.start(self, mqttc, trigger_thread_reload_cb)
