@@ -23,6 +23,9 @@ __author__ = 'Sébastien GALLET aka bibi21000'
 __email__ = 'bibi21000@gmail.com'
 __copyright__ = "Copyright © 2013-2014-2015 Sébastien GALLET aka bibi21000"
 
+import warnings
+warnings.filterwarnings("ignore")
+
 import sys, os
 import time, datetime
 import unittest
@@ -43,16 +46,6 @@ from janitoo.utils import TOPIC_VALUES_USER, TOPIC_VALUES_CONFIG, TOPIC_VALUES_S
 
 import janitoo_raspberry_i2c_hat.bus_pca9685
 import janitoo_raspberry_i2c_hat.pca9685
-
-##############################################################
-#Check that we are in sync with the official command classes
-#Must be implemented for non-regression
-from janitoo.classes import COMMAND_DESC
-
-COMMAND_DISCOVERY = 0x5000
-
-assert(COMMAND_DESC[COMMAND_DISCOVERY] == 'COMMAND_DISCOVERY')
-##############################################################
 
 class TestPwmComponent(JNTTComponent, JNTTComponentCommon):
     """Test the component

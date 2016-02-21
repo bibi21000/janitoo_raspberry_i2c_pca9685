@@ -23,6 +23,9 @@ __author__ = 'Sébastien GALLET aka bibi21000'
 __email__ = 'bibi21000@gmail.com'
 __copyright__ = "Copyright © 2013-2014-2015 Sébastien GALLET aka bibi21000"
 
+import warnings
+warnings.filterwarnings("ignore")
+
 import sys, os
 import time, datetime
 import unittest
@@ -63,12 +66,6 @@ class TestMotorHatSerser(JNTTServer, JNTTServerCommon):
     server_conf = "tests/data/janitoo_raspberry_i2c_hat.conf"
     hadds = [HADD%(139,0), HADD%(139,1), HADD%(139,2)]
 
-    def test_101_server_start_no_error_in_log(self):
+    def test_040_server_start_no_error_in_log(self):
         self.onlyRasperryTest()
-        self.start()
-        try:
-            time.sleep(120)
-            self.assertInLogfile('Found heartbeats in timeout')
-            self.assertNotInLogfile('^ERROR ')
-        finally:
-            self.stop()
+        JNTTServer.test_040_server_start_no_error_in_log(self)
