@@ -73,7 +73,7 @@ class DcMotorComponent(JNTComponent):
     def __init__(self, bus=None, addr=None, **kwargs):
         """
         """
-        oid = kwargs.pop('oid', 'rpii2chat.dcmotor')
+        oid = kwargs.pop('oid', 'rpii2cpca9685.dcmotor')
         name = kwargs.pop('name', "Motor")
         product_name = kwargs.pop('product_name', "Motor")
         product_type = kwargs.pop('product_type', "DC Motor")
@@ -178,7 +178,7 @@ class StepMotorComponent(JNTComponent):
     def __init__(self, bus=None, addr=None, **kwargs):
         """
         """
-        oid = kwargs.pop('oid', 'rpii2chat.stepmotor')
+        oid = kwargs.pop('oid', 'rpii2cpca9685.stepmotor')
         name = kwargs.pop('name', "Motor")
         product_name = kwargs.pop('product_name', "Motor")
         product_type = kwargs.pop('product_type', "Step Motor")
@@ -193,7 +193,7 @@ class LedComponent(JNTComponent):
     def __init__(self, bus=None, addr=None, **kwargs):
         """
         """
-        oid = kwargs.pop('oid', 'rpii2chat.led')
+        oid = kwargs.pop('oid', 'rpii2cpca9685.led')
         name = kwargs.pop('name', "Motor")
         product_name = kwargs.pop('product_name', "LED")
         product_type = kwargs.pop('product_type', "LED Driver")

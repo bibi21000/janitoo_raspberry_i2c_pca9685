@@ -44,11 +44,21 @@ from janitoo.utils import TOPIC_NODES, TOPIC_NODES_REPLY, TOPIC_NODES_REQUEST
 from janitoo.utils import TOPIC_BROADCAST_REPLY, TOPIC_BROADCAST_REQUEST
 from janitoo.utils import TOPIC_VALUES_USER, TOPIC_VALUES_CONFIG, TOPIC_VALUES_SYSTEM, TOPIC_VALUES_BASIC
 
-import janitoo_raspberry_i2c_hat.bus_pca9685
-import janitoo_raspberry_i2c_hat.pca9685
+import janitoo_raspberry_i2c_pca9685.bus_pca9685
+import janitoo_raspberry_i2c_pca9685.pca9685
 
-class TestPwmComponent(JNTTComponent, JNTTComponentCommon):
+class TestDcMotorComponent(JNTTComponent, JNTTComponentCommon):
     """Test the component
     """
-    component_name = "rpii2cpca9685.pwm"
+    component_name = "rpii2cpca9685.dcmotor"
+
+class TestStepMotorComponent(JNTTComponent, JNTTComponentCommon):
+    """Test the component
+    """
+    component_name = "rpii2cpca9685.stepmotor"
+
+class TestLedComponent(JNTTComponent, JNTTComponentCommon):
+    """Test the component
+    """
+    component_name = "rpii2cpca9685.led"
 

@@ -58,19 +58,17 @@ data_files_config(data_files, 'docs','src/docs/','*')
 #It will be used to collect entries without installing the package
 janitoo_entry_points = {
     "janitoo.threads": [
-        "rpii2chat = janitoo_raspberry_i2c_hat.thread_hat:make_hat",
-        "rpii2cpca9685 = janitoo_raspberry_i2c_hat.thread_hat:make_pca9685",
+        "rpii2cpca9685 = janitoo_raspberry_i2c_hat.thread_pca9685:make_pca9685",
     ],
     "janitoo.components": [
-        "rpii2chat.dcmotor = janitoo_raspberry_i2c_hat.hat:make_dcmotor",
-        "rpii2chat.stepmotor = janitoo_raspberry_i2c_hat.hat:make_stepmotor",
-        "rpii2chat.led = janitoo_raspberry_i2c_hat.hat:make_led",
-        "rpii2cpca9685.pwm = janitoo_raspberry_i2c_hat.pca9685:make_pwm",
+        "rpii2cpca9685.dcmotor = janitoo_raspberry_i2c_pca9685.pca9685:make_dcmotor",
+        "rpii2cpca9685.stepmotor = janitoo_raspberry_i2c_pca9685.pca9685:make_stepmotor",
+        "rpii2cpca9685.led = janitoo_raspberry_i2c_pca9685.pca9685:make_led",
     ],
 }
 
 setup(
-    name = 'janitoo_raspberry_i2c_hat',
+    name = 'janitoo_raspberry_i2c_pca9685',
     description = "Use an adafruit motor hat with Janitoo",
     long_description = """Provides components for DC motor, stepper motor, led driver and servo driver.
     See https://github.com/adafruit/Adafruit-Motor-HAT-Python-Library

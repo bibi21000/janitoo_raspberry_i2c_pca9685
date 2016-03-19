@@ -44,7 +44,7 @@ from janitoo.component import JNTComponent
 from janitoo.thread import BaseThread
 from janitoo.options import get_option_autostart
 
-from janitoo_raspberry_i2c_hat.thread_hat import OIDPCA9685
+from janitoo_raspberry_i2c_pca9685.thread_pca9685 import OID
 
 try:
     from Adafruit_MotorHAT.Adafruit_PWM_Servo_Driver import PWM
@@ -76,28 +76,30 @@ class Pca9685Bus(JNTBus):
         :param kwargs: parameters transmitted to :py:class:`smbus.SMBus` initializer
         """
         JNTBus.__init__(self, **kwargs)
-        uuid="%s_hexadd"%OIDPCA9685
+        uuid="%s_hexadd"%OID
         self.values[uuid] = self.value_factory['config_string'](options=self.options, uuid=uuid,
             node_uuid=self.uuid,
-            help='The I2C address of the motor HAT board',
+            help='The I2C address of the pca9685 board',
             label='Addr',
             default="0x40",
         )
         self.pca9685 = None
+        self.export_attrs('pca9685', self.pca9685)
 
     def start(self, mqttc, trigger_thread_reload_cb=None):
         JNTBus.start(self, mqttc, trigger_thread_reload_cb)
         try:
-            self.pca9685 = pwm(address=self.values["%s_hexadd"%OIDPCA9685].data)
+            self.pca9685 = PWM(address=self.values["%s_hexadd"%OID].data)
         except:
             logger.exception('Exception when intialising pca9685 board')
+        self.update_attrs('pca9685', self.pca9685)
 
     def stop(self):
-        JNTBus.stop(self)
         if self.pca9685 is not None:
             self.pca9685.softwareReset()
         self.pca9685 = None
-
+        self.update_attrs('pca9685', self.pca9685)
+        JNTBus.stop(self)
 
     def check_heartbeat(self):
         """Check that the bus is 'available'
