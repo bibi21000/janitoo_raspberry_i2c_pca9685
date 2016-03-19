@@ -58,19 +58,19 @@ data_files_config(data_files, 'docs','src/docs/','*')
 #It will be used to collect entries without installing the package
 janitoo_entry_points = {
     "janitoo.threads": [
-        "rpii2cpca9685 = janitoo_raspberry_i2c_hat.thread_pca9685:make_pca9685",
+        "rpii2cpca9685 = janitoo_raspberry_i2c_pca9685.thread_pca9685:make_pca9685",
     ],
     "janitoo.components": [
         "rpii2cpca9685.dcmotor = janitoo_raspberry_i2c_pca9685.pca9685:make_dcmotor",
         "rpii2cpca9685.stepmotor = janitoo_raspberry_i2c_pca9685.pca9685:make_stepmotor",
-        "rpii2cpca9685.led = janitoo_raspberry_i2c_pca9685.pca9685:make_led",
+        "rpii2cpca9685.pwm = janitoo_raspberry_i2c_pca9685.pca9685:make_pwm",
     ],
 }
 
 setup(
     name = 'janitoo_raspberry_i2c_pca9685',
-    description = "Use an adafruit motor hat with Janitoo",
-    long_description = """Provides components for DC motor, stepper motor, led driver and servo driver.
+    description = "Manage PWM outputs of a pca9685 (like adafruit motor ha with Janitoo",
+    long_description = """Provides components for DC motor, stepper motor and pwm raw outputs.
     See https://github.com/adafruit/Adafruit-Motor-HAT-Python-Library
     """,
     author='Sébastien GALLET aka bibi2100 <bibi21000@gmail.com>',

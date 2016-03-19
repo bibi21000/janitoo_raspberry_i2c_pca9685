@@ -61,8 +61,8 @@ assert(COMMAND_DESC[COMMAND_MOTOR] == 'COMMAND_MOTOR')
 def make_dcmotor(**kwargs):
     return DcMotorComponent(**kwargs)
 
-def make_led(**kwargs):
-    return LedComponent(**kwargs)
+def make_pwm(**kwargs):
+    return PwmComponent(**kwargs)
 
 def make_stepmotor(**kwargs):
     return StepMotorComponent(**kwargs)
@@ -187,13 +187,13 @@ class StepMotorComponent(JNTComponent):
                 product_name=product_name, product_type=product_type, product_manufacturer=product_manufacturer, **kwargs)
         logger.debug("[%s] - __init__ node uuid:%s", self.__class__.__name__, self.uuid)
 
-class LedComponent(JNTComponent):
+class PwmComponent(JNTComponent):
     """ A led driver component"""
 
     def __init__(self, bus=None, addr=None, **kwargs):
         """
         """
-        oid = kwargs.pop('oid', 'rpii2cpca9685.led')
+        oid = kwargs.pop('oid', 'rpii2cpca9685.pwm')
         name = kwargs.pop('name', "Motor")
         product_name = kwargs.pop('product_name', "LED")
         product_type = kwargs.pop('product_type', "LED Driver")

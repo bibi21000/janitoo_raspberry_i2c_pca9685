@@ -57,8 +57,8 @@ class TestStepMotorComponent(JNTTComponent, JNTTComponentCommon):
     """
     component_name = "rpii2cpca9685.stepmotor"
 
-class TestLedComponent(JNTTComponent, JNTTComponentCommon):
+class TestPwmComponent(JNTTComponent, JNTTComponentCommon):
     """Test the component
     """
-    component_name = "rpii2cpca9685.led"
+    component_name = "rpii2cpca9685.pwm"
 
