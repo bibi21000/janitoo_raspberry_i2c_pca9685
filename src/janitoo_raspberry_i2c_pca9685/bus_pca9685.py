@@ -47,7 +47,6 @@ from janitoo.options import get_option_autostart
 from janitoo_raspberry_i2c_pca9685.thread_pca9685 import OID
 
 try:
-    from Adafruit_MotorHAT.Adafruit_PWM_Servo_Driver import PWM
     from Adafruit_MotorHAT import Adafruit_MotorHAT
 except:
     logger.exception("Can't import Adafruit_MotorHAT")
@@ -122,12 +121,6 @@ class Pca9685Manager(Adafruit_MotorHAT):
         self._leds = []
         self._pwm =  PWM(addr, debug=False)
         self._pwm.setPWMFreq(self._frequency)
-
-    @property
-    def pwm(self):
-        """
-        """
-        return self._pwm
 
     @property
     def motors(self):
