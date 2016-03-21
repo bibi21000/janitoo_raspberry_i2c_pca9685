@@ -51,7 +51,7 @@ try:
 except IOError:
 
     class Adafruit_MotorHAT():
-        """
+        """ Fake class to allow buil on Continuous Integration tools.
         """
         pass
     logger.exception("Can't import Adafruit_MotorHAT")

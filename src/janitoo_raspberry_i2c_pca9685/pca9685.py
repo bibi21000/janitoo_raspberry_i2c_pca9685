@@ -44,14 +44,15 @@ try:
 except IOError:
 
     class Adafruit_StepperMotor():
-        """
+        """ Fake class to allow buil on Continuous Integration tools.
         """
         pass
 
     class Adafruit_DCMotor():
-        """
+        """ Fake class to allow buil on Continuous Integration tools.
         """
         pass
+
     logger.exception("Can't import Adafruit_MotorHAT")
 
 ##############################################################
@@ -152,7 +153,7 @@ class DcMotorComponent(JNTComponent):
         try:
             m = self.values['num'].get_data_index(index=index)
             if m is not None:
-                self._bus.hatboard.getMotor(m).setSpeed(data)
+                self._bus.pca9685.getMotor(m).setSpeed(data)
         except:
             logger.exception('Exception when setting speed')
 
@@ -164,21 +165,21 @@ class DcMotorComponent(JNTComponent):
             try:
                 m = self.values['num'].get_data_index(index=index)
                 if m is not None:
-                    self._bus.hatboard.getMotor(m).run(Adafruit_MotorHAT.FORWARD)
+                    self._bus.pca9685.getMotor(m).run(Adafruit_MotorHAT.FORWARD)
             except:
                 logger.exception('Exception when running forward')
         elif data == "backward":
             try:
                 m = self.values['num'].get_data_index(index=index)
                 if m is not None:
-                    self._bus.hatboard.getMotor(m).run(Adafruit_MotorHAT.BACKWARD)
+                    self._bus.pca9685.getMotor(m).run(Adafruit_MotorHAT.BACKWARD)
             except:
                 logger.exception('Exception when running backward')
         elif data == "release":
             m = self.values['num'].get_data_index(index=index)
             if m is not None:
                 try:
-                    self._bus.hatboard.getMotor(m).run(Adafruit_MotorHAT.RELEASE)
+                    self._bus.pca9685.getMotor(m).run(Adafruit_MotorHAT.RELEASE)
                 except:
                     logger.exception('Exception when releasing one motor %s'%m)
 
@@ -205,8 +206,8 @@ class PwmComponent(JNTComponent):
         """
         oid = kwargs.pop('oid', 'rpii2cpca9685.pwm')
         name = kwargs.pop('name', "Motor")
-        product_name = kwargs.pop('product_name', "LED")
-        product_type = kwargs.pop('product_type', "LED Driver")
+        product_name = kwargs.pop('product_name', "PWM channel")
+        product_type = kwargs.pop('product_type', "PWM channel")
         product_manufacturer = kwargs.pop('product_manufacturer', "Janitoo")
         JNTComponent.__init__(self, oid=oid, bus=bus, addr=addr, name=name,
                 product_name=product_name, product_type=product_type, product_manufacturer=product_manufacturer, **kwargs)
@@ -214,7 +215,7 @@ class PwmComponent(JNTComponent):
         uuid="level"
         self.values[uuid] = self.value_factory['action_byte'](options=self.options, uuid=uuid,
             node_uuid=self.uuid,
-            help='The level of the LED. A byte from 0 to 255',
+            help='The level of the LED. A byte from 0 to 100',
             label='Level',
             default=0,
             cmd_class=COMMAND_SWITCH_MULTILEVEL,
@@ -225,14 +226,14 @@ class PwmComponent(JNTComponent):
         uuid="max_level"
         self.values[uuid] = self.value_factory['config_byte'](options=self.options, uuid=uuid,
             node_uuid=self.uuid,
-            help="The max level supported by the LED. Some LED doesn't seems support 100% PWM. A byte from 0 to 255",
+            help="The max level supported by the LED. Some LED doesn't seems support 100% PWM. A byte from 0 to 100",
             label='Max level',
-            default=255,
+            default=100,
         )
         uuid="num"
         self.values[uuid] = self.value_factory['config_byte'](options=self.options, uuid=uuid,
             node_uuid=self.uuid,
-            help='The number of the LED on the Hat board. A byte from 1 to 4',
+            help='The number of the LED on the Hat board. A byte from 1 to 16',
             label='Num.',
         )
         uuid="switch"
@@ -250,35 +251,30 @@ class PwmComponent(JNTComponent):
     def set_level(self, node_uuid, index, data):
         """Set the level ot the LED
         """
-        self.values['level'].set_data_index(index=index, data=data)
-        m = self.values['num'].get_data_index(index=index)
-        if m is not None:
+        p = self.values['num'].get_data_index(index=index)
+        if p is not None:
             try:
-                self._bus.hatboard.getMotor(m).setSpeed(data)
-                if data == 0:
-                    self._bus.hatboard.getMotor(m).run(Adafruit_MotorHAT.RELEASE)
-                else:
-                    self._bus.hatboard.getMotor(m).run(Adafruit_MotorHAT.FORWARD)
+                self._bus.pca9685.setPWM(p, data*4096/100)
+                self.values['level'].set_data_index(index=index, data=data)
             except:
                 logger.exception('Exception when setting level')
+        logger.warning("[%s] - set_level unknown data : %s", self.__class__.__name__, self.data)
 
     def set_switch(self, node_uuid, index, data):
         """Switch On/Off the led
         """
-        params = {}
         if data == "on":
             try:
-                m = self.values['num'].get_data_index(index=index)
-                if m is not None:
-                    self._bus.hatboard.getMotor(m).setSpeed(self.values['max_level'].get_data_index(index=index))
-                    self._bus.hatboard.getMotor(m).run(Adafruit_MotorHAT.FORWARD)
+                p = self.values['num'].get_data_index(index=index)
+                self._bus.pca9685.setPWM(p, 4096)
+                self.values['level'].set_data_index(index=index, data=100)
             except:
-                logger.exception('Exception when running forward')
+                logger.exception('Exception when switching on')
         elif data == "off":
             try:
-                m = self.values['num'].get_data_index(index=index)
-                if m is not None:
-                    self._bus.hatboard.getMotor(m).setSpeed(0)
-                    self._bus.hatboard.getMotor(m).run(Adafruit_MotorHAT.RELEASE)
+                p = self.values['num'].get_data_index(index=index)
+                self._bus.pca9685.setPWM(p, 0)
+                self.values['level'].set_data_index(index=index, data=0)
             except:
-                logger.exception('Exception when running forward')
+                logger.exception('Exception when switching off')
+        logger.warning("[%s] - set_switch unknown data : %s", self.__class__.__name__, self.data)
