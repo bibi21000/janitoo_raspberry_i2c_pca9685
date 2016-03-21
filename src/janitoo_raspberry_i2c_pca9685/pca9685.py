@@ -254,11 +254,11 @@ class PwmComponent(JNTComponent):
         p = self.values['num'].get_data_index(index=index)
         if p is not None:
             try:
-                self._bus.pca9685.setPWM(p, data*4096/100)
+                self._bus.pca9685.setPWM(p, int(data*4096/100))
                 self.values['level'].set_data_index(index=index, data=data)
             except:
                 logger.exception('Exception when setting level')
-        logger.warning("[%s] - set_level unknown data : %s", self.__class__.__name__, self.data)
+        logger.warning("[%s] - set_level unknown data : %s", self.__class__.__name__, data)
 
     def set_switch(self, node_uuid, index, data):
         """Switch On/Off the led
@@ -277,4 +277,4 @@ class PwmComponent(JNTComponent):
                 self.values['level'].set_data_index(index=index, data=0)
             except:
                 logger.exception('Exception when switching off')
-        logger.warning("[%s] - set_switch unknown data : %s", self.__class__.__name__, self.data)
+        logger.warning("[%s] - set_switch unknown data : %s", self.__class__.__name__, data)

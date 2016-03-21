@@ -48,12 +48,19 @@ from janitoo_raspberry_i2c_pca9685.thread_pca9685 import OID
 
 try:
     from Adafruit_MotorHAT import Adafruit_MotorHAT
+    from Adafruit_MotorHAT.Adafruit_PWM_Servo_Driver import PWM
 except IOError:
 
     class Adafruit_MotorHAT():
         """ Fake class to allow buil on Continuous Integration tools.
         """
         pass
+
+    class PWM():
+        """ Fake class to allow buil on Continuous Integration tools.
+        """
+        pass
+   
     logger.exception("Can't import Adafruit_MotorHAT")
 
 ##############################################################
@@ -82,11 +89,11 @@ class Pca9685Bus(JNTBus):
         """
         JNTBus.__init__(self, **kwargs)
         uuid="%s_hexadd"%OID
-        self.values[uuid] = self.value_factory['config_string'](options=self.options, uuid=uuid,
+        self.values[uuid] = self.value_factory['config_integer'](options=self.options, uuid=uuid,
             node_uuid=self.uuid,
             help='The I2C address of the pca9685 board',
             label='Addr',
-            default="0x40",
+            default=0x40,
         )
         uuid="%s_freqency"%OID
         self.values[uuid] = self.value_factory['config_integer'](options=self.options, uuid=uuid,
