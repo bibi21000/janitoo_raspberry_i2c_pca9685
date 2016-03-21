@@ -48,7 +48,12 @@ from janitoo_raspberry_i2c_pca9685.thread_pca9685 import OID
 
 try:
     from Adafruit_MotorHAT import Adafruit_MotorHAT
-except:
+except IOError:
+
+    class Adafruit_MotorHAT():
+        """
+        """
+        pass
     logger.exception("Can't import Adafruit_MotorHAT")
 
 ##############################################################
@@ -82,6 +87,14 @@ class Pca9685Bus(JNTBus):
             help='The I2C address of the pca9685 board',
             label='Addr',
             default="0x40",
+        )
+        uuid="%s_freqency"%OID
+        self.values[uuid] = self.value_factory['config_integer'](options=self.options, uuid=uuid,
+            node_uuid=self.uuid,
+            help='The frequency to use of the',
+            label='Freq.',
+            default=1600,
+            units="Hz",
         )
         self.pca9685 = None
         self.export_attrs('pca9685', self.pca9685)
