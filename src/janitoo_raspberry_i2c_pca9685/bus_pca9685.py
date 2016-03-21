@@ -91,7 +91,7 @@ class Pca9685Bus(JNTBus):
         uuid="%s_freqency"%OID
         self.values[uuid] = self.value_factory['config_integer'](options=self.options, uuid=uuid,
             node_uuid=self.uuid,
-            help='The frequency to use of the',
+            help='The frequency for pwm',
             label='Freq.',
             default=1600,
             units="Hz",
@@ -102,7 +102,7 @@ class Pca9685Bus(JNTBus):
     def start(self, mqttc, trigger_thread_reload_cb=None):
         JNTBus.start(self, mqttc, trigger_thread_reload_cb)
         try:
-            self.pca9685 = Pca9685Manager(address=self.values["%s_hexadd"%OID].data)
+            self.pca9685 = Pca9685Manager(addr=self.values["%s_hexadd"%OID].data, freq=self.values["%s_freqency"%OID].data)
         except:
             logger.exception('Exception when intialising pca9685 board')
         self.update_attrs('pca9685', self.pca9685)
@@ -121,7 +121,8 @@ class Pca9685Bus(JNTBus):
         return self.pca9685 is not None
 
 class Pca9685Manager(Adafruit_MotorHAT):
-    """To share bus with the adafruit library
+    """To share bus with the adafruit library.
+    Maybe we must control the pin use (ie to not activate a led on the
     """
 
     def __init__(self, addr = 0x40, freq = 1600):
@@ -129,9 +130,9 @@ class Pca9685Manager(Adafruit_MotorHAT):
         """
         self._i2caddr = addr        # default addr
         self._frequency = freq      # default @1600Hz PWM freq
-        self._motors = []
-        self._steppers = []
-        self._leds = []
+        self._motors = None
+        self._steppers = None
+        self._leds = None
         self._pwm =  PWM(addr, debug=False)
         self._pwm.setPWMFreq(self._frequency)
 
