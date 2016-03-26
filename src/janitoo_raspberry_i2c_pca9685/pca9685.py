@@ -213,12 +213,11 @@ class PwmComponent(JNTComponent):
                 product_name=product_name, product_type=product_type, product_manufacturer=product_manufacturer, **kwargs)
         logger.debug("[%s] - __init__ node uuid:%s", self.__class__.__name__, self.uuid)
         uuid="level"
-        self.values[uuid] = self.value_factory['action_byte'](options=self.options, uuid=uuid,
+        self.values[uuid] = self.value_factory['action_switch_multilevel'](options=self.options, uuid=uuid,
             node_uuid=self.uuid,
             help='The level of the LED. A byte from 0 to 100',
             label='Level',
             default=0,
-            cmd_class=COMMAND_SWITCH_MULTILEVEL,
             set_data_cb=self.set_level,
         )
         poll_value = self.values[uuid].create_poll_value(default=300)
@@ -237,16 +236,16 @@ class PwmComponent(JNTComponent):
             label='Num.',
         )
         uuid="switch"
-        self.values[uuid] = self.value_factory['action_list'](options=self.options, uuid=uuid,
+        self.values[uuid] = self.value_factory['action_switch_binary'](options=self.options, uuid=uuid,
             node_uuid=self.uuid,
-            help='To switch the LED',
-            label='Switch',
             list_items=['on', 'off'],
             default='off',
             set_data_cb=self.set_switch,
             cmd_class=COMMAND_SWITCH_BINARY,
             genre=0x01,
         )
+        poll_value = self.values[uuid].create_poll_value(default=300)
+        self.values[poll_value.uuid] = poll_value
 
     def set_level(self, node_uuid, index, data):
         """Set the level ot the LED
