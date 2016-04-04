@@ -155,7 +155,7 @@ class DcMotorComponent(JNTComponent):
             if m is not None:
                 self._bus.pca9685.getMotor(m).setSpeed(data)
         except:
-            logger.exception('Exception when setting speed')
+            logger.exception('[%s] - Exception when setting speed')
 
     def set_action(self, node_uuid, index, data):
         """Act on the motor
@@ -167,21 +167,21 @@ class DcMotorComponent(JNTComponent):
                 if m is not None:
                     self._bus.pca9685.getMotor(m).run(Adafruit_MotorHAT.FORWARD)
             except:
-                logger.exception('Exception when running forward')
+                logger.exception('[%s] - Exception when running forward')
         elif data == "backward":
             try:
                 m = self.values['num'].get_data_index(index=index)
                 if m is not None:
                     self._bus.pca9685.getMotor(m).run(Adafruit_MotorHAT.BACKWARD)
             except:
-                logger.exception('Exception when running backward')
+                logger.exception('[%s] - Exception when running backward')
         elif data == "release":
             m = self.values['num'].get_data_index(index=index)
             if m is not None:
                 try:
                     self._bus.pca9685.getMotor(m).run(Adafruit_MotorHAT.RELEASE)
                 except:
-                    logger.exception('Exception when releasing one motor %s'%m)
+                    logger.exception('[%s] - Exception when releasing one motor %s', m)
 
 class StepMotorComponent(JNTComponent):
     """ A stepper motor component"""
@@ -255,7 +255,7 @@ class PwmComponent(JNTComponent):
                 self._bus.pca9685.setPWM(p, int(data*4096/100))
                 self.values['level'].set_data_index(index=index, data=data)
             except:
-                logger.exception('Exception when setting level')
+                logger.exception('[%s] - Exception when setting level')
         logger.warning("[%s] - set_level unknown data : %s", self.__class__.__name__, data)
 
     def set_switch(self, node_uuid, index, data):
@@ -267,12 +267,12 @@ class PwmComponent(JNTComponent):
                 self._bus.pca9685.setPWM(p, 4096)
                 self.values['level'].set_data_index(index=index, data=100)
             except:
-                logger.exception('Exception when switching on')
+                logger.exception('[%s] - Exception when switching on', self.__class__.__name__)
         elif data == "off":
             try:
                 p = self.values['num'].get_data_index(index=index)
                 self._bus.pca9685.setPWM(p, 0)
                 self.values['level'].set_data_index(index=index, data=0)
             except:
-                logger.exception('Exception when switching off')
+                logger.exception('[%s] - Exception when switching off', self.__class__.__name__)
         logger.warning("[%s] - set_switch unknown data : %s", self.__class__.__name__, data)

@@ -60,7 +60,7 @@ except IOError:
         """ Fake class to allow buil on Continuous Integration tools.
         """
         pass
-   
+
     logger.exception("Can't import Adafruit_MotorHAT")
 
 ##############################################################
@@ -88,7 +88,7 @@ class Pca9685Bus(JNTBus):
         :param kwargs: parameters transmitted to :py:class:`smbus.SMBus` initializer
         """
         JNTBus.__init__(self, **kwargs)
-        uuid="%s_hexadd"%OID
+        uuid="%s_addr"%OID
         self.values[uuid] = self.value_factory['config_integer'](options=self.options, uuid=uuid,
             node_uuid=self.uuid,
             help='The I2C address of the pca9685 board',
@@ -109,9 +109,9 @@ class Pca9685Bus(JNTBus):
     def start(self, mqttc, trigger_thread_reload_cb=None):
         JNTBus.start(self, mqttc, trigger_thread_reload_cb)
         try:
-            self.pca9685 = Pca9685Manager(addr=self.values["%s_hexadd"%OID].data, freq=self.values["%s_freqency"%OID].data)
+            self.pca9685 = Pca9685Manager(addr=self.values["%s_addr"%OID].data, freq=self.values["%s_freqency"%OID].data)
         except:
-            logger.exception('Exception when intialising pca9685 board')
+            logger.exception('[%s] - Exception when intialising pca9685 board', self.__class__.__name__)
         self.update_attrs('pca9685', self.pca9685)
 
     def stop(self):
@@ -140,7 +140,7 @@ class Pca9685Manager(Adafruit_MotorHAT):
         self._motors = None
         self._steppers = None
         self._leds = None
-        self._pwm =  PWM(addr, debug=False)
+        self._pwm = PWM(addr, debug=False)
         self._pwm.setPWMFreq(self._frequency)
 
     @property
