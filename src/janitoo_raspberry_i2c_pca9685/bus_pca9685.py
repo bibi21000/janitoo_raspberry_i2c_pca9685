@@ -102,7 +102,7 @@ def extend( self ):
     self._pca9865_start = self.start
     def start(mqttc, trigger_thread_reload_cb=None):
         """Start the bus"""
-        logger.debug("[%s] - Start the bus %s", self.__class__.__name__, "pca9865")
+        logger.debug("[%s] - Start the bus %s", self.__class__.__name__, self.oid )
         self._bus.i2c_acquire()
         try:
             self._pca9685_manager = Pca9685Manager(addr=self.values["%s_addr"%OID].data, freq=self.values["%s_freqency"%OID].data)
