@@ -50,15 +50,15 @@ import janitoo_raspberry_i2c_pca9685.pca9685
 class TestDcMotorComponent(JNTTComponent, JNTTComponentCommon):
     """Test the component
     """
-    component_name = "rpii2cpca9685.dcmotor"
+    component_name = "rpii2c.dcmotor"
 
 class TestStepMotorComponent(JNTTComponent, JNTTComponentCommon):
     """Test the component
     """
-    component_name = "rpii2cpca9685.stepmotor"
+    component_name = "rpii2c.stepmotor"
 
 class TestPwmComponent(JNTTComponent, JNTTComponentCommon):
     """Test the component
     """
-    component_name = "rpii2cpca9685.pwm"
+    component_name = "rpii2c.pwm"
 

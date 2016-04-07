@@ -45,7 +45,7 @@ from janitoo.utils import TOPIC_VALUES_USER, TOPIC_VALUES_CONFIG, TOPIC_VALUES_S
 
 from janitoo_raspberry.server import PiServer
 
-class TestPca9685HatSerser(JNTTServer, JNTTServerCommon):
+class TestPca9685Serser(JNTTServer, JNTTServerCommon):
     """Test the pi server
     """
     loglevel = logging.DEBUG
@@ -55,6 +55,18 @@ class TestPca9685HatSerser(JNTTServer, JNTTServerCommon):
     server_class = PiServer
     server_conf = "tests/data/janitoo_raspberry_i2c_pca9685.conf"
     hadds = [HADD%(140,0), HADD%(140,1), HADD%(140,2)]
+
+    def test_011_start_reload_stop(self):
+        self.skipRasperryTest()
+        JNTTServerCommon.test_011_start_reload_stop(self)
+
+    def test_012_start_reload_threads_stop(self):
+        self.skipRasperryTest()
+        JNTTServerCommon.test_012_start_reload_threads_stop(self)
+
+    def test_030_wait_for_all_nodes(self):
+        self.skipRasperryTest()
+        JNTTServerCommon.test_030_wait_for_all_nodes(self)
 
     def test_040_server_start_no_error_in_log(self):
         self.onlyRasperryTest()

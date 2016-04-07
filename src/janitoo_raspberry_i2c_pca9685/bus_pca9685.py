@@ -44,8 +44,6 @@ from janitoo.component import JNTComponent
 from janitoo.thread import BaseThread
 from janitoo.options import get_option_autostart
 
-from janitoo_raspberry_i2c_pca9685.thread_pca9685 import OID
-
 try:
     from Adafruit_MotorHAT import Adafruit_MotorHAT
     from Adafruit_MotorHAT.Adafruit_PWM_Servo_Driver import PWM
@@ -79,53 +77,59 @@ assert(COMMAND_DESC[COMMAND_CAMERA_VIDEO] == 'COMMAND_CAMERA_VIDEO')
 assert(COMMAND_DESC[COMMAND_CAMERA_STREAM] == 'COMMAND_CAMERA_STREAM')
 ##############################################################
 
-class Pca9685Bus(JNTBus):
-    """A pseudo-bus to handle the Raspberry pca9685 board
-    """
-    def __init__(self, **kwargs):
-        """
-        :param int bus_id: the SMBus id (see Raspberry Pi documentation)
-        :param kwargs: parameters transmitted to :py:class:`smbus.SMBus` initializer
-        """
-        JNTBus.__init__(self, **kwargs)
-        uuid="%s_addr"%OID
-        self.values[uuid] = self.value_factory['config_integer'](options=self.options, uuid=uuid,
-            node_uuid=self.uuid,
-            help='The I2C address of the pca9685 board',
-            label='Addr',
-            default=0x40,
-        )
-        uuid="%s_freqency"%OID
-        self.values[uuid] = self.value_factory['config_integer'](options=self.options, uuid=uuid,
-            node_uuid=self.uuid,
-            help='The frequency for pwm',
-            label='Freq.',
-            default=1600,
-            units="Hz",
-        )
-        self.pca9685 = None
-        self.export_attrs('pca9685', self.pca9685)
+OID = 'rpii2c'
 
-    def start(self, mqttc, trigger_thread_reload_cb=None):
-        JNTBus.start(self, mqttc, trigger_thread_reload_cb)
+def extend( self ):
+
+    uuid="%s_addr"%OID
+    self.values[uuid] = self.value_factory['config_integer'](options=self.options, uuid=uuid,
+        node_uuid=self.uuid,
+        help='The I2C address of the pca9685 board',
+        label='Addr',
+        default=0x40,
+    )
+    uuid="%s_freqency"%OID
+    self.values[uuid] = self.value_factory['config_integer'](options=self.options, uuid=uuid,
+        node_uuid=self.uuid,
+        help='The frequency for pwm',
+        label='Freq.',
+        default=1600,
+        units="Hz",
+    )
+    self._pca9685_manager = None
+    self.export_attrs('pca9685', self._pca9685_manager)
+
+    self._pca9865_start = self.start
+    def start(mqttc, trigger_thread_reload_cb=None):
+        """Start the bus"""
+        logger.debug("[%s] - Start the bus %s", self.__class__.__name__, "pca9865")
+        self._bus.i2c_acquire()
         try:
-            self.pca9685 = Pca9685Manager(addr=self.values["%s_addr"%OID].data, freq=self.values["%s_freqency"%OID].data)
+            self._pca9685_manager = Pca9685Manager(addr=self.values["%s_addr"%OID].data, freq=self.values["%s_freqency"%OID].data)
         except:
             logger.exception('[%s] - Exception when intialising pca9685 board', self.__class__.__name__)
-        self.update_attrs('pca9685', self.pca9685)
+        finally:
+            self._bus.i2c_release()
+        self.update_attrs('pca9685', self._pca9685_manager)
+        return self._pca9865_start(mqttc, trigger_thread_reload_cb=trigger_thread_reload_cb)
+    self.start = start
 
-    def stop(self):
-        if self.pca9685 is not None:
-            self.pca9685.software_reset()
-        self.pca9685 = None
-        self.update_attrs('pca9685', self.pca9685)
-        JNTBus.stop(self)
+    self._pca9865_stop = self.stop
+    def stop():
+        """Stop the bus"""
+        if self._pca9685_manager is not None:
+            try:
+                self._pca9685_manager.software_reset()
+            except:
+                logger.exception('[%s] - Exception when stopping pca9685 board', self.__class__.__name__)
+            finally:
+                self._bus.i2c_release()
+        ret = self._pca9865_stop()
+        self._pca9685_manager = None
+        self.update_attrs('pca9685', self._pca9685_manager)
+        return ret
+    self.stop=stop
 
-    def check_heartbeat(self):
-        """Check that the bus is 'available'
-
-        """
-        return self.pca9685 is not None
 
 class Pca9685Manager(Adafruit_MotorHAT):
     """To share bus with the adafruit library.

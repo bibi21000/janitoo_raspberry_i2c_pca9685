@@ -84,7 +84,7 @@ class DcMotorComponent(JNTComponent):
     def __init__(self, bus=None, addr=None, **kwargs):
         """
         """
-        oid = kwargs.pop('oid', 'rpii2cpca9685.dcmotor')
+        oid = kwargs.pop('oid', 'rpii2c.dcmotor')
         name = kwargs.pop('name', "Motor")
         product_name = kwargs.pop('product_name', "Motor")
         product_type = kwargs.pop('product_type', "DC Motor")
@@ -153,7 +153,11 @@ class DcMotorComponent(JNTComponent):
         try:
             m = self.values['num'].get_data_index(index=index)
             if m is not None:
-                self._bus.pca9685.getMotor(m).setSpeed(data)
+                self._bus.i2c_acquire()
+                try:
+                    self._bus._pca9685_manager.getMotor(m).setSpeed(data)
+                finally:
+                    self._bus.i2c_release()
         except:
             logger.exception('[%s] - Exception when setting speed')
 
@@ -165,21 +169,33 @@ class DcMotorComponent(JNTComponent):
             try:
                 m = self.values['num'].get_data_index(index=index)
                 if m is not None:
-                    self._bus.pca9685.getMotor(m).run(Adafruit_MotorHAT.FORWARD)
+                    self._bus.i2c_acquire()
+                    try:
+                        self._bus._pca9685_manager.getMotor(m).run(Adafruit_MotorHAT.FORWARD)
+                    finally:
+                        self._bus.i2c_release()
             except:
                 logger.exception('[%s] - Exception when running forward')
         elif data == "backward":
             try:
                 m = self.values['num'].get_data_index(index=index)
                 if m is not None:
-                    self._bus.pca9685.getMotor(m).run(Adafruit_MotorHAT.BACKWARD)
+                    self._bus.i2c_acquire()
+                    try:
+                        self._bus._pca9685_manager.getMotor(m).run(Adafruit_MotorHAT.BACKWARD)
+                    finally:
+                        self._bus.i2c_release()
             except:
                 logger.exception('[%s] - Exception when running backward')
         elif data == "release":
             m = self.values['num'].get_data_index(index=index)
             if m is not None:
                 try:
-                    self._bus.pca9685.getMotor(m).run(Adafruit_MotorHAT.RELEASE)
+                    self._bus.i2c_acquire()
+                    try:
+                        self._bus._pca9685_manager.getMotor(m).run(Adafruit_MotorHAT.RELEASE)
+                    finally:
+                        self._bus.i2c_release()
                 except:
                     logger.exception('[%s] - Exception when releasing one motor %s', m)
 
@@ -189,7 +205,7 @@ class StepMotorComponent(JNTComponent):
     def __init__(self, bus=None, addr=None, **kwargs):
         """
         """
-        oid = kwargs.pop('oid', 'rpii2cpca9685.stepmotor')
+        oid = kwargs.pop('oid', 'rpii2c.stepmotor')
         name = kwargs.pop('name', "Motor")
         product_name = kwargs.pop('product_name', "Motor")
         product_type = kwargs.pop('product_type', "Step Motor")
@@ -204,7 +220,7 @@ class PwmComponent(JNTComponent):
     def __init__(self, bus=None, addr=None, **kwargs):
         """
         """
-        oid = kwargs.pop('oid', 'rpii2cpca9685.pwm')
+        oid = kwargs.pop('oid', 'rpii2c.pwm')
         name = kwargs.pop('name', "Motor")
         product_name = kwargs.pop('product_name', "PWM channel")
         product_type = kwargs.pop('product_type', "PWM channel")
@@ -238,10 +254,7 @@ class PwmComponent(JNTComponent):
         uuid="switch"
         self.values[uuid] = self.value_factory['action_switch_binary'](options=self.options, uuid=uuid,
             node_uuid=self.uuid,
-            list_items=['on', 'off'],
-            default='off',
             set_data_cb=self.set_switch,
-            genre=0x01,
         )
         poll_value = self.values[uuid].create_poll_value(default=300)
         self.values[poll_value.uuid] = poll_value
@@ -251,28 +264,39 @@ class PwmComponent(JNTComponent):
         """
         p = self.values['num'].get_data_index(index=index)
         if p is not None:
+            self._bus.i2c_acquire()
             try:
-                self._bus.pca9685.setPWM(p, int(data*4096/100))
+                self._bus._pca9685_manager.setPWM(p, int(data*4096/100))
                 self.values['level'].set_data_index(index=index, data=data)
             except:
                 logger.exception('[%s] - Exception when setting level')
-        logger.warning("[%s] - set_level unknown data : %s", self.__class__.__name__, data)
+            finally:
+                self._bus.i2c_release()
+        else:
+            logger.warning("[%s] - set_level unknown data : %s", self.__class__.__name__, data)
 
     def set_switch(self, node_uuid, index, data):
         """Switch On/Off the led
         """
         if data == "on":
+            self._bus.i2c_acquire()
             try:
                 p = self.values['num'].get_data_index(index=index)
-                self._bus.pca9685.setPWM(p, 4096)
+                self._bus._pca9685_manager.setPWM(p, 4096)
                 self.values['level'].set_data_index(index=index, data=100)
             except:
                 logger.exception('[%s] - Exception when switching on', self.__class__.__name__)
+            finally:
+                self._bus.i2c_release()
         elif data == "off":
+            self._bus.i2c_acquire()
             try:
                 p = self.values['num'].get_data_index(index=index)
-                self._bus.pca9685.setPWM(p, 0)
+                self._bus._pca9685_manager.setPWM(p, 0)
                 self.values['level'].set_data_index(index=index, data=0)
             except:
                 logger.exception('[%s] - Exception when switching off', self.__class__.__name__)
-        logger.warning("[%s] - set_switch unknown data : %s", self.__class__.__name__, data)
+            finally:
+                self._bus.i2c_release()
+        else:
+            logger.warning("[%s] - set_switch unknown data : %s", self.__class__.__name__, data)

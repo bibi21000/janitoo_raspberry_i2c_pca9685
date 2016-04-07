@@ -57,14 +57,14 @@ data_files_config(data_files, 'docs','src/docs/','*')
 #You must define a variable like the one below.
 #It will be used to collect entries without installing the package
 janitoo_entry_points = {
-    "janitoo.threads": [
-        "rpii2cpca9685 = janitoo_raspberry_i2c_pca9685.thread_pca9685:make_pca9685",
-    ],
     "janitoo.components": [
-        "rpii2cpca9685.dcmotor = janitoo_raspberry_i2c_pca9685.pca9685:make_dcmotor",
-        "rpii2cpca9685.stepmotor = janitoo_raspberry_i2c_pca9685.pca9685:make_stepmotor",
-        "rpii2cpca9685.pwm = janitoo_raspberry_i2c_pca9685.pca9685:make_pwm",
+        "rpii2c.dcmotor = janitoo_raspberry_i2c_pca9685.pca9685:make_dcmotor",
+        "rpii2c.stepmotor = janitoo_raspberry_i2c_pca9685.pca9685:make_stepmotor",
+        "rpii2c.pwm = janitoo_raspberry_i2c_pca9685.pca9685:make_pwm",
     ],
+        "rpii2c.extensions": [
+            "rpii2c = janitoo_raspberry_i2c_pca9865.bus_pca9865:extend",
+        ],
 }
 
 setup(
