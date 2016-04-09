@@ -51,8 +51,8 @@ class TestPiSerser(JNTTDockerServer, JNTTDockerServerCommon):
     broker_user = 'toto'
     broker_password = 'toto'
     server_class = PiServer
-    server_conf = "tests/data/janitoo_raspberry_i2c_pca9865.conf"
-    hadds = [HADD%(140,0), HADD%(140,1), HADD%(140,2) ]
+    server_conf = "tests/data/janitoo_raspberry_i2c_pca9685.conf"
+    hadds = [HADD%(140,0), HADD%(140,1), HADD%(140,2)]
 
     def test_040_server_start_no_error_in_log(self):
         JNTTDockerServer.onlyDockerTest()
