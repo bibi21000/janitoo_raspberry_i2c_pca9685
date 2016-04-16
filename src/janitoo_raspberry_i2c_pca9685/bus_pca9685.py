@@ -97,7 +97,7 @@ def extend( self ):
         units="Hz",
     )
     self._pca9685_manager = None
-    self.export_attrs('pca9685', self._pca9685_manager)
+    self.export_attrs('_pca9685_manager', self._pca9685_manager)
 
     self._pca9865_start = self.start
     def start(mqttc, trigger_thread_reload_cb=None):
@@ -110,7 +110,7 @@ def extend( self ):
             logger.exception('[%s] - Exception when intialising pca9685 board', self.__class__.__name__)
         finally:
             self._bus.i2c_release()
-        self.update_attrs('pca9685', self._pca9685_manager)
+        self.update_attrs('_pca9685_manager', self._pca9685_manager)
         return self._pca9865_start(mqttc, trigger_thread_reload_cb=trigger_thread_reload_cb)
     self.start = start
 
@@ -126,7 +126,7 @@ def extend( self ):
                 self._bus.i2c_release()
         ret = self._pca9865_stop()
         self._pca9685_manager = None
-        self.update_attrs('pca9685', self._pca9685_manager)
+        self.update_attrs('_pca9685_manager', self._pca9685_manager)
         return ret
     self.stop=stop
 

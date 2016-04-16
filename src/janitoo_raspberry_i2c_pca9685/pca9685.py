@@ -263,17 +263,14 @@ class PwmComponent(JNTComponent):
         """Set the level ot the LED
         """
         p = self.values['num'].get_data_index(index=index)
-        if p is not None:
-            self._bus.i2c_acquire()
-            try:
-                self._bus._pca9685_manager.setPWM(p, int(data*4096/100))
-                self.values['level'].set_data_index(index=index, data=data)
-            except:
-                logger.exception('[%s] - Exception when setting level')
-            finally:
-                self._bus.i2c_release()
-        else:
-            logger.warning("[%s] - set_level unknown data : %s", self.__class__.__name__, data)
+        self._bus.i2c_acquire()
+        try:
+            self._bus._pca9685_manager.setPWM(p, int(data*4096/100))
+            self.values['level'].set_data_index(index=index, data=data)
+        except:
+            logger.warning("[%s] - set_level invalid data : %s", self.__class__.__name__, data)
+        finally:
+            self._bus.i2c_release()
 
     def set_switch(self, node_uuid, index, data):
         """Switch On/Off the led
