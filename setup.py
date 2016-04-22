@@ -62,9 +62,9 @@ janitoo_entry_points = {
         "rpii2c.stepmotor = janitoo_raspberry_i2c_pca9685.pca9685:make_stepmotor",
         "rpii2c.pwm = janitoo_raspberry_i2c_pca9685.pca9685:make_pwm",
     ],
-        "rpii2c.extensions": [
-            "rpii2c = janitoo_raspberry_i2c_pca9865.bus_pca9865:extend",
-        ],
+    "rpii2c.extensions": [
+        "pca9865 = janitoo_raspberry_i2c_pca9865.bus_pca9865:extend",
+    ],
 }
 
 setup(

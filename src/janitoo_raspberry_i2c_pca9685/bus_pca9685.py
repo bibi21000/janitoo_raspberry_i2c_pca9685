@@ -118,6 +118,7 @@ def extend( self ):
     def stop():
         """Stop the bus"""
         if self._pca9685_manager is not None:
+            self._bus.i2c_acquire()
             try:
                 self._pca9685_manager.software_reset()
             except:
