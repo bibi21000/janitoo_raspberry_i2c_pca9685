@@ -54,19 +54,6 @@ def data_files_config(res, rsrc, src, pattern):
 data_files = []
 data_files_config(data_files, 'docs','src/docs/','*')
 
-#You must define a variable like the one below.
-#It will be used to collect entries without installing the package
-janitoo_entry_points = {
-    "janitoo.components": [
-        "rpii2c.dcmotor = janitoo_raspberry_i2c_pca9685.pca9685:make_dcmotor",
-        "rpii2c.stepmotor = janitoo_raspberry_i2c_pca9685.pca9685:make_stepmotor",
-        "rpii2c.pwm = janitoo_raspberry_i2c_pca9685.pca9685:make_pwm",
-    ],
-    "rpii2c.extensions": [
-        "pca9865 = janitoo_raspberry_i2c_pca9685.bus_pca9685:extend",
-    ],
-}
-
 setup(
     name = 'janitoo_raspberry_i2c_pca9685',
     description = "Manage PWM outputs of a pca9685 (like adafruit motor ha with Janitoo",
@@ -113,5 +100,14 @@ setup(
       'https://github.com/adafruit/Adafruit_Python_GPIO/archive/master.zip#egg=Adafruit-GPIO',
       'https://github.com/adafruit/Adafruit-Motor-HAT-Python-Library/archive/master.zip#egg=Adafruit_MotorHAT',
     ],
-    entry_points = janitoo_entry_points,
+    entry_points = {
+        "janitoo.components": [
+            "rpii2c.dcmotor = janitoo_raspberry_i2c_pca9685.pca9685:make_dcmotor",
+            "rpii2c.stepmotor = janitoo_raspberry_i2c_pca9685.pca9685:make_stepmotor",
+            "rpii2c.pwm = janitoo_raspberry_i2c_pca9685.pca9685:make_pwm",
+        ],
+        "rpii2c.extensions": [
+            "pca9865 = janitoo_raspberry_i2c_pca9685.bus_pca9685:extend",
+        ],
+    },
 )
