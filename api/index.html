@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>janitoo_raspberry_i2c_pca9685 package &mdash; janitoo_raspberry_i2c_pca9685 0.0.7 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinxcontrib-images/LightBox2/lightbox2/css/lightbox.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/united/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.0.7',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/sphinxcontrib-images/LightBox2/lightbox2/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../_static/sphinxcontrib-images/LightBox2/lightbox2/js/lightbox.min.js"></script>
+    <script type="text/javascript" src="../_static/sphinxcontrib-images/LightBox2/lightbox2-customize/jquery-noconflict.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="top" title="janitoo_raspberry_i2c_pca9685 0.0.7 documentation" href="../index.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body>
+
+  <div id="navbar" class="navbar navbar-inverse navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html">
+          janitoo_raspberry_i2c_pca9685</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.0.7</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../tools/index.html">Tools</a></li>
+                <li><a href="#">Reference</a></li>
+                <li><a href="../extensions/index.html">Janitoo extensions</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="simple">
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+              
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 content">
+      
+  <div class="section" id="janitoo-raspberry-i2c-pca9685-package">
+<h1>janitoo_raspberry_i2c_pca9685 package<a class="headerlink" href="#janitoo-raspberry-i2c-pca9685-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-janitoo_raspberry_i2c_pca9685.bus_pca9685">
+<span id="janitoo-raspberry-i2c-pca9685-bus-pca9685-module"></span><h2>janitoo_raspberry_i2c_pca9685.bus_pca9685 module<a class="headerlink" href="#module-janitoo_raspberry_i2c_pca9685.bus_pca9685" title="Permalink to this headline">¶</a></h2>
+<p>The Raspberry camera worker</p>
+<p>Installation :</p>
+<div class="highlight-bash"><div class="highlight"><pre>sudo apt-get install python-pycamera
+</pre></div>
+</div>
+<dl class="class">
+<dt id="janitoo_raspberry_i2c_pca9685.bus_pca9685.Adafruit_MotorHAT">
+<em class="property">class </em><tt class="descclassname">janitoo_raspberry_i2c_pca9685.bus_pca9685.</tt><tt class="descname">Adafruit_MotorHAT</tt><a class="reference internal" href="../_modules/janitoo_raspberry_i2c_pca9685/bus_pca9685.html#Adafruit_MotorHAT"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#janitoo_raspberry_i2c_pca9685.bus_pca9685.Adafruit_MotorHAT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fake class to allow buil on Continuous Integration tools.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="janitoo_raspberry_i2c_pca9685.bus_pca9685.PWM">
+<em class="property">class </em><tt class="descclassname">janitoo_raspberry_i2c_pca9685.bus_pca9685.</tt><tt class="descname">PWM</tt><a class="reference internal" href="../_modules/janitoo_raspberry_i2c_pca9685/bus_pca9685.html#PWM"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#janitoo_raspberry_i2c_pca9685.bus_pca9685.PWM" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fake class to allow buil on Continuous Integration tools.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="janitoo_raspberry_i2c_pca9685.bus_pca9685.Pca9685Manager">
+<em class="property">class </em><tt class="descclassname">janitoo_raspberry_i2c_pca9685.bus_pca9685.</tt><tt class="descname">Pca9685Manager</tt><big>(</big><em>addr=64</em>, <em>freq=1600</em><big>)</big><a class="reference internal" href="../_modules/janitoo_raspberry_i2c_pca9685/bus_pca9685.html#Pca9685Manager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#janitoo_raspberry_i2c_pca9685.bus_pca9685.Pca9685Manager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#janitoo_raspberry_i2c_pca9685.bus_pca9685.Adafruit_MotorHAT" title="janitoo_raspberry_i2c_pca9685.bus_pca9685.Adafruit_MotorHAT"><tt class="xref py py-class docutils literal"><span class="pre">janitoo_raspberry_i2c_pca9685.bus_pca9685.Adafruit_MotorHAT</span></tt></a></p>
+<p>To share bus with the adafruit library.
+Maybe we must control the pin use (ie to not activate a led on the</p>
+<dl class="attribute">
+<dt id="janitoo_raspberry_i2c_pca9685.bus_pca9685.Pca9685Manager.motors">
+<tt class="descname">motors</tt><a class="reference internal" href="../_modules/janitoo_raspberry_i2c_pca9685/bus_pca9685.html#Pca9685Manager.motors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#janitoo_raspberry_i2c_pca9685.bus_pca9685.Pca9685Manager.motors" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="janitoo_raspberry_i2c_pca9685.bus_pca9685.Pca9685Manager.setPwm">
+<tt class="descname">setPwm</tt><big>(</big><em>pin</em>, <em>value_on</em><big>)</big><a class="reference internal" href="../_modules/janitoo_raspberry_i2c_pca9685/bus_pca9685.html#Pca9685Manager.setPwm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#janitoo_raspberry_i2c_pca9685.bus_pca9685.Pca9685Manager.setPwm" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="janitoo_raspberry_i2c_pca9685.bus_pca9685.Pca9685Manager.software_reset">
+<tt class="descname">software_reset</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/janitoo_raspberry_i2c_pca9685/bus_pca9685.html#Pca9685Manager.software_reset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#janitoo_raspberry_i2c_pca9685.bus_pca9685.Pca9685Manager.software_reset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="janitoo_raspberry_i2c_pca9685.bus_pca9685.Pca9685Manager.steppers">
+<tt class="descname">steppers</tt><a class="reference internal" href="../_modules/janitoo_raspberry_i2c_pca9685/bus_pca9685.html#Pca9685Manager.steppers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#janitoo_raspberry_i2c_pca9685.bus_pca9685.Pca9685Manager.steppers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="janitoo_raspberry_i2c_pca9685.bus_pca9685.extend">
+<tt class="descclassname">janitoo_raspberry_i2c_pca9685.bus_pca9685.</tt><tt class="descname">extend</tt><big>(</big><em>self</em><big>)</big><a class="reference internal" href="../_modules/janitoo_raspberry_i2c_pca9685/bus_pca9685.html#extend"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#janitoo_raspberry_i2c_pca9685.bus_pca9685.extend" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-janitoo_raspberry_i2c_pca9685.pca9685">
+<span id="janitoo-raspberry-i2c-pca9685-pca9685-module"></span><h2>janitoo_raspberry_i2c_pca9685.pca9685 module<a class="headerlink" href="#module-janitoo_raspberry_i2c_pca9685.pca9685" title="Permalink to this headline">¶</a></h2>
+<p>The Raspberry bmp thread</p>
+<p>Server files using the http protocol</p>
+<dl class="class">
+<dt id="janitoo_raspberry_i2c_pca9685.pca9685.Adafruit_DCMotor">
+<em class="property">class </em><tt class="descclassname">janitoo_raspberry_i2c_pca9685.pca9685.</tt><tt class="descname">Adafruit_DCMotor</tt><a class="reference internal" href="../_modules/janitoo_raspberry_i2c_pca9685/pca9685.html#Adafruit_DCMotor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#janitoo_raspberry_i2c_pca9685.pca9685.Adafruit_DCMotor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fake class to allow buil on Continuous Integration tools.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="janitoo_raspberry_i2c_pca9685.pca9685.Adafruit_StepperMotor">
+<em class="property">class </em><tt class="descclassname">janitoo_raspberry_i2c_pca9685.pca9685.</tt><tt class="descname">Adafruit_StepperMotor</tt><a class="reference internal" href="../_modules/janitoo_raspberry_i2c_pca9685/pca9685.html#Adafruit_StepperMotor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#janitoo_raspberry_i2c_pca9685.pca9685.Adafruit_StepperMotor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fake class to allow buil on Continuous Integration tools.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="janitoo_raspberry_i2c_pca9685.pca9685.DcMotorComponent">
+<em class="property">class </em><tt class="descclassname">janitoo_raspberry_i2c_pca9685.pca9685.</tt><tt class="descname">DcMotorComponent</tt><big>(</big><em>bus=None</em>, <em>addr=None</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/janitoo_raspberry_i2c_pca9685/pca9685.html#DcMotorComponent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#janitoo_raspberry_i2c_pca9685.pca9685.DcMotorComponent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">janitoo.component.JNTComponent</span></tt></p>
+<p>A DC motor component for gpio</p>
+<dl class="method">
+<dt id="janitoo_raspberry_i2c_pca9685.pca9685.DcMotorComponent.get_current_speed">
+<tt class="descname">get_current_speed</tt><big>(</big><em>node_uuid</em>, <em>index</em><big>)</big><a class="reference internal" href="../_modules/janitoo_raspberry_i2c_pca9685/pca9685.html#DcMotorComponent.get_current_speed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#janitoo_raspberry_i2c_pca9685.pca9685.DcMotorComponent.get_current_speed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the current speed</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="janitoo_raspberry_i2c_pca9685.pca9685.DcMotorComponent.set_action">
+<tt class="descname">set_action</tt><big>(</big><em>node_uuid</em>, <em>index</em>, <em>data</em><big>)</big><a class="reference internal" href="../_modules/janitoo_raspberry_i2c_pca9685/pca9685.html#DcMotorComponent.set_action"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#janitoo_raspberry_i2c_pca9685.pca9685.DcMotorComponent.set_action" title="Permalink to this definition">¶</a></dt>
+<dd><p>Act on the motor</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="janitoo_raspberry_i2c_pca9685.pca9685.DcMotorComponent.set_speed">
+<tt class="descname">set_speed</tt><big>(</big><em>node_uuid</em>, <em>index</em>, <em>data</em><big>)</big><a class="reference internal" href="../_modules/janitoo_raspberry_i2c_pca9685/pca9685.html#DcMotorComponent.set_speed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#janitoo_raspberry_i2c_pca9685.pca9685.DcMotorComponent.set_speed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the speed ot the motor</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="janitoo_raspberry_i2c_pca9685.pca9685.PwmComponent">
+<em class="property">class </em><tt class="descclassname">janitoo_raspberry_i2c_pca9685.pca9685.</tt><tt class="descname">PwmComponent</tt><big>(</big><em>bus=None</em>, <em>addr=None</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/janitoo_raspberry_i2c_pca9685/pca9685.html#PwmComponent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#janitoo_raspberry_i2c_pca9685.pca9685.PwmComponent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">janitoo.component.JNTComponent</span></tt></p>
+<p>A led driver component</p>
+<dl class="method">
+<dt id="janitoo_raspberry_i2c_pca9685.pca9685.PwmComponent.set_level">
+<tt class="descname">set_level</tt><big>(</big><em>node_uuid</em>, <em>index</em>, <em>data</em><big>)</big><a class="reference internal" href="../_modules/janitoo_raspberry_i2c_pca9685/pca9685.html#PwmComponent.set_level"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#janitoo_raspberry_i2c_pca9685.pca9685.PwmComponent.set_level" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the level ot the LED</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="janitoo_raspberry_i2c_pca9685.pca9685.PwmComponent.set_switch">
+<tt class="descname">set_switch</tt><big>(</big><em>node_uuid</em>, <em>index</em>, <em>data</em><big>)</big><a class="reference internal" href="../_modules/janitoo_raspberry_i2c_pca9685/pca9685.html#PwmComponent.set_switch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#janitoo_raspberry_i2c_pca9685.pca9685.PwmComponent.set_switch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Switch On/Off the led</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="janitoo_raspberry_i2c_pca9685.pca9685.StepMotorComponent">
+<em class="property">class </em><tt class="descclassname">janitoo_raspberry_i2c_pca9685.pca9685.</tt><tt class="descname">StepMotorComponent</tt><big>(</big><em>bus=None</em>, <em>addr=None</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/janitoo_raspberry_i2c_pca9685/pca9685.html#StepMotorComponent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#janitoo_raspberry_i2c_pca9685.pca9685.StepMotorComponent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">janitoo.component.JNTComponent</span></tt></p>
+<p>A stepper motor component</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="janitoo_raspberry_i2c_pca9685.pca9685.make_dcmotor">
+<tt class="descclassname">janitoo_raspberry_i2c_pca9685.pca9685.</tt><tt class="descname">make_dcmotor</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/janitoo_raspberry_i2c_pca9685/pca9685.html#make_dcmotor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#janitoo_raspberry_i2c_pca9685.pca9685.make_dcmotor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="janitoo_raspberry_i2c_pca9685.pca9685.make_pwm">
+<tt class="descclassname">janitoo_raspberry_i2c_pca9685.pca9685.</tt><tt class="descname">make_pwm</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/janitoo_raspberry_i2c_pca9685/pca9685.html#make_pwm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#janitoo_raspberry_i2c_pca9685.pca9685.make_pwm" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="janitoo_raspberry_i2c_pca9685.pca9685.make_stepmotor">
+<tt class="descclassname">janitoo_raspberry_i2c_pca9685.pca9685.</tt><tt class="descname">make_stepmotor</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/janitoo_raspberry_i2c_pca9685/pca9685.html#make_stepmotor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#janitoo_raspberry_i2c_pca9685.pca9685.make_stepmotor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-janitoo_raspberry_i2c_pca9685">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-janitoo_raspberry_i2c_pca9685" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2015, Sébastien GALLET aka bibi2100 &lt;bibi21000@gmail.com&gt;.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
