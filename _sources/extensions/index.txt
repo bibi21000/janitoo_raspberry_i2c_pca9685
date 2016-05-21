@@ -1,20 +1,7 @@
-janitoo_raspberry_i2c_pca9685 package
-=====================================
+Janitoo's extensions
+====================
 
-Show janitoo's extensions.
+This package contains the following extensions for Janitoo.
 
-Core extensions
----------------
-
-Components
-^^^^^^^^^^
-
- - rpii2c.stepmotor (janitoo_raspberry_i2c_pca9685.pca9685:make_stepmotor)
- - rpii2c.pwm (janitoo_raspberry_i2c_pca9685.pca9685:make_pwm)
- - rpii2c.dcmotor (janitoo_raspberry_i2c_pca9685.pca9685:make_dcmotor)
-
-Bus extensions 
-^^^^^^^^^^^^^^^
-
- - ('rpii2c', 'pca9865') (janitoo_raspberry_i2c_pca9685.bus_pca9685:extend)
+.. jnt-extensions::
 
