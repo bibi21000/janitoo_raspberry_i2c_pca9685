@@ -106,7 +106,7 @@ def extend( self ):
         self.i2c_acquire()
         try:
             self._pca9685_manager = Pca9685Manager(addr=self.values["%s_addr"%OID].data, freq=self.values["%s_freqency"%OID].data)
-        except:
+        except Exception:
             logger.exception('[%s] - Exception when intialising pca9685 board', self.__class__.__name__)
         finally:
             self.i2c_release()
@@ -121,7 +121,7 @@ def extend( self ):
             self.i2c_acquire()
             try:
                 self._pca9685_manager.software_reset()
-            except:
+            except Exception:
                 logger.exception('[%s] - Exception when stopping pca9685 board', self.__class__.__name__)
             finally:
                 self.i2c_release()

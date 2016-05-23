@@ -157,7 +157,7 @@ class DcMotorComponent(JNTComponent):
                     self._bus._pca9685_manager.getMotor(m).setSpeed(data)
                 finally:
                     self._bus.i2c_release()
-        except:
+        except Exception:
             logger.exception('[%s] - Exception when setting speed')
 
     def set_action(self, node_uuid, index, data):
@@ -173,7 +173,7 @@ class DcMotorComponent(JNTComponent):
                         self._bus._pca9685_manager.getMotor(m).run(Adafruit_MotorHAT.FORWARD)
                     finally:
                         self._bus.i2c_release()
-            except:
+            except Exception:
                 logger.exception('[%s] - Exception when running forward')
         elif data == "backward":
             try:
@@ -184,7 +184,7 @@ class DcMotorComponent(JNTComponent):
                         self._bus._pca9685_manager.getMotor(m).run(Adafruit_MotorHAT.BACKWARD)
                     finally:
                         self._bus.i2c_release()
-            except:
+            except Exception:
                 logger.exception('[%s] - Exception when running backward')
         elif data == "release":
             m = self.values['num'].get_data_index(index=index)
@@ -195,7 +195,7 @@ class DcMotorComponent(JNTComponent):
                         self._bus._pca9685_manager.getMotor(m).run(Adafruit_MotorHAT.RELEASE)
                     finally:
                         self._bus.i2c_release()
-                except:
+                except Exception:
                     logger.exception('[%s] - Exception when releasing one motor %s', m)
 
 class StepMotorComponent(JNTComponent):
@@ -266,7 +266,7 @@ class PwmComponent(JNTComponent):
         try:
             self._bus._pca9685_manager.setPWM(p, int(data*4096/100))
             self.values['level'].set_data_index(index=index, data=data)
-        except:
+        except Exception:
             logger.warning("[%s] - set_level invalid data : %s", self.__class__.__name__, data)
         finally:
             self._bus.i2c_release()
@@ -280,7 +280,7 @@ class PwmComponent(JNTComponent):
                 p = self.values['num'].get_data_index(index=index)
                 self._bus._pca9685_manager.setPWM(p, 4096)
                 self.values['level'].set_data_index(index=index, data=100)
-            except:
+            except Exception:
                 logger.exception('[%s] - Exception when switching on', self.__class__.__name__)
             finally:
                 self._bus.i2c_release()
@@ -290,7 +290,7 @@ class PwmComponent(JNTComponent):
                 p = self.values['num'].get_data_index(index=index)
                 self._bus._pca9685_manager.setPWM(p, 0)
                 self.values['level'].set_data_index(index=index, data=0)
-            except:
+            except Exception:
                 logger.exception('[%s] - Exception when switching off', self.__class__.__name__)
             finally:
                 self._bus.i2c_release()
