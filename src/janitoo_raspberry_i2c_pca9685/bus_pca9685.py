@@ -77,7 +77,7 @@ assert(COMMAND_DESC[COMMAND_CAMERA_VIDEO] == 'COMMAND_CAMERA_VIDEO')
 assert(COMMAND_DESC[COMMAND_CAMERA_STREAM] == 'COMMAND_CAMERA_STREAM')
 ##############################################################
 
-OID = 'rpii2c'
+from janitoo_raspberry_i2c import OID
 
 def extend( self ):
 
