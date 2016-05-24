@@ -142,28 +142,29 @@
 <span class="c"># Set default logging handler to avoid &quot;No handler found&quot; warnings.</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
-<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">threading</span>
-<span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">import</span> <span class="nn">datetime</span>
-<span class="kn">import</span> <span class="nn">socket</span>
-<span class="kn">from</span> <span class="nn">janitoo.thread</span> <span class="kn">import</span> <span class="n">JNTBusThread</span>
-<span class="kn">from</span> <span class="nn">janitoo.bus</span> <span class="kn">import</span> <span class="n">JNTBus</span>
-<span class="kn">from</span> <span class="nn">janitoo.component</span> <span class="kn">import</span> <span class="n">JNTComponent</span>
-<span class="kn">from</span> <span class="nn">janitoo.thread</span> <span class="kn">import</span> <span class="n">BaseThread</span>
-<span class="kn">from</span> <span class="nn">janitoo.options</span> <span class="kn">import</span> <span class="n">get_option_autostart</span>
+<span class="kn">import</span> <span class="nn">os</span>
 
 <span class="k">try</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">Adafruit_MotorHAT</span> <span class="kn">import</span> <span class="n">Adafruit_MotorHAT</span>
+    <span class="kn">from</span> <span class="nn">Adafruit_MotorHAT</span> <span class="kn">import</span> <span class="n">Adafruit_MotorHAT</span><span class="p">,</span> <span class="n">Adafruit_StepperMotor</span><span class="p">,</span> <span class="n">Adafruit_DCMotor</span>
     <span class="kn">from</span> <span class="nn">Adafruit_MotorHAT.Adafruit_PWM_Servo_Driver</span> <span class="kn">import</span> <span class="n">PWM</span>
 <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
 
-<div class="viewcode-block" id="Adafruit_MotorHAT"><a class="viewcode-back" href="../../api/index.html#janitoo_raspberry_i2c_pca9685.bus_pca9685.Adafruit_MotorHAT">[docs]</a>    <span class="k">class</span> <span class="nc">Adafruit_MotorHAT</span><span class="p">():</span>
+<div class="viewcode-block" id="Adafruit_MotorHAT"><a class="viewcode-back" href="../../api/index.html#janitoo_raspberry_i2c_pca9685.bus_pca9685.Adafruit_MotorHAT">[docs]</a>    <span class="k">class</span> <span class="nc">Adafruit_MotorHAT</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Fake class to allow buil on Continuous Integration tools.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
 </div>
-<div class="viewcode-block" id="PWM"><a class="viewcode-back" href="../../api/index.html#janitoo_raspberry_i2c_pca9685.bus_pca9685.PWM">[docs]</a>    <span class="k">class</span> <span class="nc">PWM</span><span class="p">():</span>
+<div class="viewcode-block" id="Adafruit_StepperMotor"><a class="viewcode-back" href="../../api/index.html#janitoo_raspberry_i2c_pca9685.bus_pca9685.Adafruit_StepperMotor">[docs]</a>    <span class="k">class</span> <span class="nc">Adafruit_StepperMotor</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Fake class to allow buil on Continuous Integration tools.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+</div>
+<div class="viewcode-block" id="Adafruit_DCMotor"><a class="viewcode-back" href="../../api/index.html#janitoo_raspberry_i2c_pca9685.bus_pca9685.Adafruit_DCMotor">[docs]</a>    <span class="k">class</span> <span class="nc">Adafruit_DCMotor</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Fake class to allow buil on Continuous Integration tools.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+</div>
+<div class="viewcode-block" id="PWM"><a class="viewcode-back" href="../../api/index.html#janitoo_raspberry_i2c_pca9685.bus_pca9685.PWM">[docs]</a>    <span class="k">class</span> <span class="nc">PWM</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Fake class to allow buil on Continuous Integration tools.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
@@ -186,7 +187,7 @@
 <span class="k">assert</span><span class="p">(</span><span class="n">COMMAND_DESC</span><span class="p">[</span><span class="n">COMMAND_CAMERA_STREAM</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;COMMAND_CAMERA_STREAM&#39;</span><span class="p">)</span>
 <span class="c">##############################################################</span>
 
-<span class="n">OID</span> <span class="o">=</span> <span class="s">&#39;rpii2c&#39;</span>
+<span class="kn">from</span> <span class="nn">janitoo_raspberry_i2c</span> <span class="kn">import</span> <span class="n">OID</span>
 
 <div class="viewcode-block" id="extend"><a class="viewcode-back" href="../../api/index.html#janitoo_raspberry_i2c_pca9685.bus_pca9685.extend">[docs]</a><span class="k">def</span> <span class="nf">extend</span><span class="p">(</span> <span class="bp">self</span> <span class="p">):</span>
 
