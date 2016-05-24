@@ -28,27 +28,26 @@ __copyright__ = "Copyright © 2013-2014-2015-2016 Sébastien GALLET aka bibi2100
 
 import logging
 logger = logging.getLogger(__name__)
-import os, sys
-import threading
+import os
 
-from janitoo.thread import JNTBusThread, BaseThread
-from janitoo.options import get_option_autostart
-from janitoo.utils import HADD
-from janitoo.node import JNTNode
-from janitoo.value import JNTValue
+from janitoo.thread import JNTBusThread
 from janitoo.component import JNTComponent
-from janitoo_raspberry_i2c.bus_i2c import I2CBus
 
 try:
-    from Adafruit_MotorHAT import Adafruit_StepperMotor, Adafruit_DCMotor
+    from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_StepperMotor, Adafruit_DCMotor
 except IOError:
 
-    class Adafruit_StepperMotor():
+    class Adafruit_MotorHAT(object):
         """ Fake class to allow buil on Continuous Integration tools.
         """
         pass
 
-    class Adafruit_DCMotor():
+    class Adafruit_StepperMotor(object):
+        """ Fake class to allow buil on Continuous Integration tools.
+        """
+        pass
+
+    class Adafruit_DCMotor(object):
         """ Fake class to allow buil on Continuous Integration tools.
         """
         pass
@@ -198,7 +197,7 @@ class DcMotorComponent(JNTComponent):
                     finally:
                         self._bus.i2c_release()
                 except Exception:
-                    logger.exception('[%s] - Exception when releasing one motor %s', m)
+                    logger.exception('[%s] - Exception when releasing one motor %s', self.__class__.__name__, m)
 
 class StepMotorComponent(JNTComponent):
     """ A stepper motor component"""

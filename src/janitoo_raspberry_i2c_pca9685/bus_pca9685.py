@@ -33,28 +33,29 @@ __copyright__ = "Copyright © 2013-2014-2015-2016 Sébastien GALLET aka bibi2100
 # Set default logging handler to avoid "No handler found" warnings.
 import logging
 logger = logging.getLogger(__name__)
-import os, sys
-import threading
-import time
-import datetime
-import socket
-from janitoo.thread import JNTBusThread
-from janitoo.bus import JNTBus
-from janitoo.component import JNTComponent
-from janitoo.thread import BaseThread
-from janitoo.options import get_option_autostart
+import os
 
 try:
-    from Adafruit_MotorHAT import Adafruit_MotorHAT
+    from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_StepperMotor, Adafruit_DCMotor
     from Adafruit_MotorHAT.Adafruit_PWM_Servo_Driver import PWM
 except IOError:
 
-    class Adafruit_MotorHAT():
+    class Adafruit_MotorHAT(object):
         """ Fake class to allow buil on Continuous Integration tools.
         """
         pass
 
-    class PWM():
+    class Adafruit_StepperMotor(object):
+        """ Fake class to allow buil on Continuous Integration tools.
+        """
+        pass
+
+    class Adafruit_DCMotor(object):
+        """ Fake class to allow buil on Continuous Integration tools.
+        """
+        pass
+
+    class PWM(object):
         """ Fake class to allow buil on Continuous Integration tools.
         """
         pass
