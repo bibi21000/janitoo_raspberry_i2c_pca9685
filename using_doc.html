@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>&lt;no title&gt; &mdash; janitoo_raspberry_i2c_pca9685 0.0.7 documentation</title>
+    <title>Using documentation &mdash; janitoo_raspberry_i2c_pca9685 0.0.7 documentation</title>
     
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -33,6 +33,7 @@
     <script type="text/javascript" src="_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="janitoo_raspberry_i2c_pca9685 0.0.7 documentation" href="index.html" />
+    <link rel="prev" title="Welcome to documentation!" href="index.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
@@ -71,9 +72,9 @@
      href="index.html">Site <b class="caret"></b></a>
   <ul class="dropdown-menu globaltoc"
       role="menu"
-      aria-labelledby="dLabelGlobalToc"><ul>
-<li class="toctree-l1"><a class="reference internal" href="using_doc.html"> Using documentation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="using_doc.html#the-header">The header</a></li>
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href=""> Using documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#the-header">The header</a></li>
 </ul>
 </li>
 </ul>
@@ -84,6 +85,10 @@
             
               
                 
+  <li>
+    <a href="index.html" title="Previous Chapter: Welcome to documentation!"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Welcome to do...</span>
+    </a>
+  </li>
               
             
             
@@ -109,19 +114,23 @@
   <div class="row">
     <div class="col-md-12 content">
       
-  <p>About swap</p>
-<p>$ cd /etc/default/
-$ sudo ln -s /opt/janitoo/src/janitoo_raspberry/utils/zram-swap.default zram-swap
-$ cd /etc/init.d/
-$ sudo ln -s /opt/janitoo/src/janitoo_raspberry/utils/zram-swap zram-swap
-$ chmod 755 /opt/janitoo/src/janitoo_raspberry/utils/zram-swap
-$ sudo update-rc.d zram-swap defaults 02 99
-update-rc.d: using dependency based boot sequencing
-update-rc.d: warning: default stop runlevel arguments (0 1 6) do not match zram-swap Default-Stop values (none)</p>
-<p>Using the staff group
-- add your user (pi) to it
-- sudo chmod -Rf g+w /usr/local/lib/python2.7/
-- sudo chmod -Rf g+w /usr/local/bin</p>
+  <div class="section" id="using-documentation">
+<h1>Using documentation<a class="headerlink" href="#using-documentation" title="Permalink to this headline">¶</a></h1>
+<p>Some notes on documentation</p>
+<div class="section" id="the-header">
+<h2>The header<a class="headerlink" href="#the-header" title="Permalink to this headline">¶</a></h2>
+<a class="reference internal image-reference" href="_images/using_doc.png"><img alt="Using Janitoo documentation" src="_images/using_doc.png" style="width: 800px;" /></a>
+<p>From left to right :</p>
+<ul class="simple">
+<li>janitoo_tutorial jumps you to the index table.</li>
+<li>Tools lets you access to developpents tools reports : Travis, Coversall, Lanscape, Nose, Coverage, ... if available.</li>
+<li>Reference links you to the code documentation.</li>
+<li>Janitoo extensions shows the list of components, thread, values, ... includes in this package.</li>
+<li>Site is a menu for navigating between sections of the table of index.</li>
+<li>The last 1 or 2 sections before the search engine allows you to browse the documentation between section of the table of index.</li>
+</ul>
+</div>
+</div>
 
 
     </div>
