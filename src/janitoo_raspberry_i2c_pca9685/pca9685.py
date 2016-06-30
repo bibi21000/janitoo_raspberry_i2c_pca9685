@@ -335,16 +335,16 @@ class PanComponent(JNTComponent):
     def set_change(self, node_uuid, index, data):
         """Change the position of the pan
         """
-            self._bus.i2c_acquire()
-            try:
-                px,py = self.values['nums'].get_data_index(index=index).split(',')
-                if data=="-1,-1":
-                    sx,sy = self.values['initial'].get_data_index(index=index).split(',')
-                else:
-                    sx,sy = data.split(',')
-                self._bus._pca9685_manager.setPWM(px, int(sx), 4096-int(sx))
-                self._bus._pca9685_manager.setPWM(py, int(sy), 4096-int(sy))
-            except Exception:
-                logger.exception('[%s] - Exception when set_change', self.__class__.__name__)
-            finally:
-                self._bus.i2c_release()
+        self._bus.i2c_acquire()
+        try:
+            px,py = self.values['nums'].get_data_index(index=index).split(',')
+            if data=="-1,-1":
+                sx,sy = self.values['initial'].get_data_index(index=index).split(',')
+            else:
+                sx,sy = data.split(',')
+            self._bus._pca9685_manager.setPWM(px, int(sx), 4096-int(sx))
+            self._bus._pca9685_manager.setPWM(py, int(sy), 4096-int(sy))
+        except Exception:
+            logger.exception('[%s] - Exception when set_change', self.__class__.__name__)
+        finally:
+            self._bus.i2c_release()
