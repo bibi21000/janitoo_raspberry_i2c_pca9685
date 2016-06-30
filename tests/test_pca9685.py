@@ -62,3 +62,8 @@ class TestPwmComponent(JNTTComponent, JNTTComponentCommon):
     """
     component_name = "rpii2c.pwm"
 
+class TestPanComponent(JNTTComponent, JNTTComponentCommon):
+    """Test the component
+    """
+    component_name = "rpii2c.pan"
+

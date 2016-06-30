@@ -263,7 +263,7 @@ class PwmComponent(JNTComponent):
         p = self.values['num'].get_data_index(index=index)
         self._bus.i2c_acquire()
         try:
-            self._bus._pca9685_manager.setPWM(p, int(data*4096/100))
+            self._bus._pca9685_manager.setPWM(p, int(data*4096/100),0)
             self.values['level'].set_data_index(index=index, data=data)
         except Exception:
             logger.warning("[%s] - set_level invalid data : %s", self.__class__.__name__, data)
@@ -277,7 +277,7 @@ class PwmComponent(JNTComponent):
             self._bus.i2c_acquire()
             try:
                 p = self.values['num'].get_data_index(index=index)
-                self._bus._pca9685_manager.setPWM(p, 4096)
+                self._bus._pca9685_manager.setPWM(p, 4096, 0)
                 self.values['level'].set_data_index(index=index, data=100)
             except Exception:
                 logger.exception('[%s] - Exception when switching on', self.__class__.__name__)
@@ -287,7 +287,7 @@ class PwmComponent(JNTComponent):
             self._bus.i2c_acquire()
             try:
                 p = self.values['num'].get_data_index(index=index)
-                self._bus._pca9685_manager.setPWM(p, 0)
+                self._bus._pca9685_manager.setPWM(p, 0, 4096)
                 self.values['level'].set_data_index(index=index, data=0)
             except Exception:
                 logger.exception('[%s] - Exception when switching off', self.__class__.__name__)
@@ -295,3 +295,56 @@ class PwmComponent(JNTComponent):
                 self._bus.i2c_release()
         else:
             logger.warning("[%s] - set_switch unknown data : %s", self.__class__.__name__, data)
+
+class PanComponent(JNTComponent):
+    """ A pan component"""
+
+    def __init__(self, bus=None, addr=None, **kwargs):
+        """
+        """
+        oid = kwargs.pop('oid', '%s.pan'%OID)
+        name = kwargs.pop('name', "Pan & Tilt component")
+        product_name = kwargs.pop('product_name', "Pan & Tilt component")
+        product_type = kwargs.pop('product_type', "Pan & Tilt component")
+        product_manufacturer = kwargs.pop('product_manufacturer', "Janitoo")
+        JNTComponent.__init__(self, oid=oid, bus=bus, addr=addr, name=name,
+                product_name=product_name, product_type=product_type, product_manufacturer=product_manufacturer, **kwargs)
+        logger.debug("[%s] - __init__ node uuid:%s", self.__class__.__name__, self.uuid)
+
+        uuid="initial"
+        self.values[uuid] = self.value_factory['config_string'](options=self.options, uuid=uuid,
+            node_uuid=self.uuid,
+            help="Initial position on (x,y)",
+            label='Init pos',
+            default='0,0',
+        )
+        uuid="nums"
+        self.values[uuid] = self.value_factory['config_string'](options=self.options, uuid=uuid,
+            node_uuid=self.uuid,
+            help='The number of servos on the Hat board (x,y) where x,y is a byte from 1 to 16',
+            label='Num.',
+        )
+        uuid="change"
+        self.values[uuid] = self.value_factory['action_string'](options=self.options, uuid=uuid,
+            node_uuid=self.uuid,
+            set_data_cb=self.set_change,
+        )
+        poll_value = self.values[uuid].create_poll_value(default=300)
+        self.values[poll_value.uuid] = poll_value
+
+    def set_change(self, node_uuid, index, data):
+        """Change the position of the pan
+        """
+            self._bus.i2c_acquire()
+            try:
+                px,py = self.values['nums'].get_data_index(index=index).split(',')
+                if data=="-1,-1":
+                    sx,sy = self.values['initial'].get_data_index(index=index).split(',')
+                else:
+                    sx,sy = data.split(',')
+                self._bus._pca9685_manager.setPWM(px, int(sx), 4096-int(sx))
+                self._bus._pca9685_manager.setPWM(py, int(sy), 4096-int(sy))
+            except Exception:
+                logger.exception('[%s] - Exception when set_change', self.__class__.__name__)
+            finally:
+                self._bus.i2c_release()
