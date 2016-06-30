@@ -74,6 +74,9 @@ def make_dcmotor(**kwargs):
 def make_pwm(**kwargs):
     return PwmComponent(**kwargs)
 
+def make_pan(**kwargs):
+    return PanComponent(**kwargs)
+
 def make_stepmotor(**kwargs):
     return StepMotorComponent(**kwargs)
 
