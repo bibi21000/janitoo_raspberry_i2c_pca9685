@@ -156,7 +156,7 @@ class DcMotorComponent(JNTComponent):
             if m is not None:
                 self._bus.i2c_acquire()
                 try:
-                    self._bus._pca9685_manager.getMotor(m).setSpeed(data)
+                    self._bus.pca9685_manager.getMotor(m).setSpeed(data)
                 finally:
                     self._bus.i2c_release()
         except Exception:
@@ -172,7 +172,7 @@ class DcMotorComponent(JNTComponent):
                 if m is not None:
                     self._bus.i2c_acquire()
                     try:
-                        self._bus._pca9685_manager.getMotor(m).run(Adafruit_MotorHAT.FORWARD)
+                        self._bus.pca9685_manager.getMotor(m).run(Adafruit_MotorHAT.FORWARD)
                     finally:
                         self._bus.i2c_release()
             except Exception:
@@ -183,7 +183,7 @@ class DcMotorComponent(JNTComponent):
                 if m is not None:
                     self._bus.i2c_acquire()
                     try:
-                        self._bus._pca9685_manager.getMotor(m).run(Adafruit_MotorHAT.BACKWARD)
+                        self._bus.pca9685_manager.getMotor(m).run(Adafruit_MotorHAT.BACKWARD)
                     finally:
                         self._bus.i2c_release()
             except Exception:
@@ -194,7 +194,7 @@ class DcMotorComponent(JNTComponent):
                 try:
                     self._bus.i2c_acquire()
                     try:
-                        self._bus._pca9685_manager.getMotor(m).run(Adafruit_MotorHAT.RELEASE)
+                        self._bus.pca9685_manager.getMotor(m).run(Adafruit_MotorHAT.RELEASE)
                     finally:
                         self._bus.i2c_release()
                 except Exception:
@@ -266,7 +266,7 @@ class PwmComponent(JNTComponent):
         p = self.values['num'].get_data_index(index=index)
         self._bus.i2c_acquire()
         try:
-            self._bus._pca9685_manager.setPWM(p, int(data*4096/100),0)
+            self._bus.pca9685_manager.setPWM(p, int(data*4096/100),0)
             self.values['level'].set_data_index(index=index, data=data)
         except Exception:
             logger.warning("[%s] - set_level invalid data : %s", self.__class__.__name__, data)
@@ -280,7 +280,7 @@ class PwmComponent(JNTComponent):
             self._bus.i2c_acquire()
             try:
                 p = self.values['num'].get_data_index(index=index)
-                self._bus._pca9685_manager.setPWM(p, 4096, 0)
+                self._bus.pca9685_manager.setPWM(p, 4096, 0)
                 self.values['level'].set_data_index(index=index, data=100)
             except Exception:
                 logger.exception('[%s] - Exception when switching on', self.__class__.__name__)
@@ -290,7 +290,7 @@ class PwmComponent(JNTComponent):
             self._bus.i2c_acquire()
             try:
                 p = self.values['num'].get_data_index(index=index)
-                self._bus._pca9685_manager.setPWM(p, 0, 4096)
+                self._bus.pca9685_manager.setPWM(p, 0, 4096)
                 self.values['level'].set_data_index(index=index, data=0)
             except Exception:
                 logger.exception('[%s] - Exception when switching off', self.__class__.__name__)
@@ -345,8 +345,8 @@ class PanComponent(JNTComponent):
                 sx,sy = self.values['initial'].get_data_index(index=index).split(',')
             else:
                 sx,sy = data.split(',')
-            self._bus._pca9685_manager.setPWM(px, int(sx), 4096-int(sx))
-            self._bus._pca9685_manager.setPWM(py, int(sy), 4096-int(sy))
+            self._bus.pca9685_manager.setPWM(px, int(sx), 4096-int(sx))
+            self._bus.pca9685_manager.setPWM(py, int(sy), 4096-int(sy))
         except Exception:
             logger.exception('[%s] - Exception when set_change', self.__class__.__name__)
         finally:

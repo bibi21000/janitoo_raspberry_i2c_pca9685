@@ -96,8 +96,8 @@ def extend( self ):
         default=1600,
         units="Hz",
     )
-    self._pca9685_manager = None
-    self.export_attrs('_pca9685_manager', self._pca9685_manager)
+    self.pca9685_manager = None
+    self.export_attrs('pca9685_manager', self.pca9685_manager)
 
     self._pca9865_start = self.start
     def start(mqttc, trigger_thread_reload_cb=None):
@@ -105,29 +105,29 @@ def extend( self ):
         logger.debug("[%s] - Start the bus %s", self.__class__.__name__, self.oid )
         self.i2c_acquire()
         try:
-            self._pca9685_manager = Pca9685Manager(addr=self.values["%s_addr"%OID].data, freq=self.values["%s_freqency"%OID].data)
+            self.pca9685_manager = Pca9685Manager(addr=self.values["%s_addr"%OID].data, freq=self.values["%s_freqency"%OID].data)
         except Exception:
             logger.exception('[%s] - Exception when intialising pca9685 board', self.__class__.__name__)
         finally:
             self.i2c_release()
-        self.update_attrs('_pca9685_manager', self._pca9685_manager)
+        self.update_attrs('pca9685_manager', self.pca9685_manager)
         return self._pca9865_start(mqttc, trigger_thread_reload_cb=trigger_thread_reload_cb)
     self.start = start
 
     self._pca9865_stop = self.stop
     def stop():
         """Stop the bus"""
-        if self._pca9685_manager is not None:
+        if self.pca9685_manager is not None:
             self.i2c_acquire()
             try:
-                self._pca9685_manager.software_reset()
+                self.pca9685_manager.software_reset()
             except Exception:
                 logger.exception('[%s] - Exception when stopping pca9685 board', self.__class__.__name__)
             finally:
                 self.i2c_release()
         ret = self._pca9865_stop()
-        self._pca9685_manager = None
-        self.update_attrs('_pca9685_manager', self._pca9685_manager)
+        self.pca9685_manager = None
+        self.update_attrs('pca9685_manager', self.pca9685_manager)
         return ret
     self.stop=stop
 
