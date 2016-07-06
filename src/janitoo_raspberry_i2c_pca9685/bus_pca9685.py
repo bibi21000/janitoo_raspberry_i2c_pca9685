@@ -99,7 +99,7 @@ def extend( self ):
     self.pca9685_manager = None
     self.export_attrs('pca9685_manager', self.pca9685_manager)
 
-    self._pca9865_start = self.start
+    self._pca9685_start = self.start
     def start(mqttc, trigger_thread_reload_cb=None):
         """Start the bus"""
         logger.debug("[%s] - Start the bus %s", self.__class__.__name__, self.oid )
@@ -111,10 +111,10 @@ def extend( self ):
         finally:
             self.i2c_release()
         self.update_attrs('pca9685_manager', self.pca9685_manager)
-        return self._pca9865_start(mqttc, trigger_thread_reload_cb=trigger_thread_reload_cb)
+        return self._pca9685_start(mqttc, trigger_thread_reload_cb=trigger_thread_reload_cb)
     self.start = start
 
-    self._pca9865_stop = self.stop
+    self._pca9685_stop = self.stop
     def stop():
         """Stop the bus"""
         if self.pca9685_manager is not None:
@@ -125,7 +125,7 @@ def extend( self ):
                 logger.exception('[%s] - Exception when stopping pca9685 board', self.__class__.__name__)
             finally:
                 self.i2c_release()
-        ret = self._pca9865_stop()
+        ret = self._pca9685_stop()
         self.pca9685_manager = None
         self.update_attrs('pca9685_manager', self.pca9685_manager)
         return ret
