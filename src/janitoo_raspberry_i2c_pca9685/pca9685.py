@@ -266,7 +266,7 @@ class PwmComponent(JNTComponent):
         p = self.values['num'].get_data_index(index=index)
         self._bus.i2c_acquire()
         try:
-            self._bus.pca9685_manager.setPWM(p, int(data*4096/100),0)
+            self._bus.pca9685_manager.set_pwm(p, int(data*4096/100),0)
             self.values['level'].set_data_index(index=index, data=data)
         except Exception:
             logger.warning("[%s] - set_level invalid data : %s", self.__class__.__name__, data)
@@ -280,7 +280,7 @@ class PwmComponent(JNTComponent):
             self._bus.i2c_acquire()
             try:
                 p = self.values['num'].get_data_index(index=index)
-                self._bus.pca9685_manager.setPWM(p, 4096, 0)
+                self._bus.pca9685_manager.set_pwm(p, 4096, 0)
                 self.values['level'].set_data_index(index=index, data=100)
             except Exception:
                 logger.exception('[%s] - Exception when switching on', self.__class__.__name__)
@@ -290,7 +290,7 @@ class PwmComponent(JNTComponent):
             self._bus.i2c_acquire()
             try:
                 p = self.values['num'].get_data_index(index=index)
-                self._bus.pca9685_manager.setPWM(p, 0, 4096)
+                self._bus.pca9685_manager.set_pwm(p, 0, 4096)
                 self.values['level'].set_data_index(index=index, data=0)
             except Exception:
                 logger.exception('[%s] - Exception when switching off', self.__class__.__name__)
@@ -326,6 +326,7 @@ class PanComponent(JNTComponent):
             node_uuid=self.uuid,
             help='The number of servos on the Hat board (x,y) where x,y is a byte from 1 to 16',
             label='Num.',
+            default='0,1',
         )
         uuid="change"
         self.values[uuid] = self.value_factory['action_string'](options=self.options, uuid=uuid,
@@ -338,6 +339,7 @@ class PanComponent(JNTComponent):
     def set_change(self, node_uuid, index, data):
         """Change the position of the pan
         """
+        print "!!!!!!!!! set_change"
         self._bus.i2c_acquire()
         try:
             px,py = self.values['nums'].get_data_index(index=index).split(',')
@@ -345,8 +347,10 @@ class PanComponent(JNTComponent):
                 sx,sy = self.values['initial'].get_data_index(index=index).split(',')
             else:
                 sx,sy = data.split(',')
-            self._bus.pca9685_manager.setPWM(px, int(sx), 4096-int(sx))
-            self._bus.pca9685_manager.setPWM(py, int(sy), 4096-int(sy))
+            logger.debug('[%s] - set_change of pins %s,%s', self.__class__.__name__, px, py)
+            logger.debug('[%s] - set_change to data %s,%s', self.__class__.__name__, sx, sy)
+            self._bus.pca9685_manager.set_pwm(px, int(sx))
+            self._bus.pca9685_manager.set_pwm(py, int(sy))
         except Exception:
             logger.exception('[%s] - Exception when set_change', self.__class__.__name__)
         finally:
