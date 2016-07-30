@@ -96,13 +96,14 @@ def extend( self ):
         default=1600,
         units="Hz",
     )
+    self.export_values()
     self.pca9685_manager = None
     self.export_attrs('pca9685_manager', self.pca9685_manager)
 
     self._pca9685_start = self.start
     def start(mqttc, trigger_thread_reload_cb=None):
         """Start the bus"""
-        logger.debug("[%s] - Start the bus %s", self.__class__.__name__, self.oid )
+        logger.debug("[%s] - Start the bus %s on address %s", self.__class__.__name__, self.oid, self.values["%s_addr"%OID].data )
         self.i2c_acquire()
         try:
             self.pca9685_manager = Pca9685Manager(addr=self.values["%s_addr"%OID].data, freq=self.values["%s_freqency"%OID].data)
@@ -169,7 +170,7 @@ class Pca9685Manager(Adafruit_MotorHAT):
         """
         self._pwm.softwareReset()
 
-    def setPwm(self, pin, value_on):
+    def set_pwm(self, pin, value_on):
         """
         """
         if (pin < 0) or (pin > 15):
