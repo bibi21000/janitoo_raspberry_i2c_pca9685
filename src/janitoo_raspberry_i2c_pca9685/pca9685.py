@@ -80,6 +80,9 @@ def make_pan(**kwargs):
 def make_stepmotor(**kwargs):
     return StepMotorComponent(**kwargs)
 
+def make_servo(**kwargs):
+    return ServoComponent(**kwargs)
+
 class DcMotorComponent(JNTComponent):
     """ A DC motor component for gpio """
 
@@ -347,6 +350,71 @@ class PanComponent(JNTComponent):
                 sx,sy = data.split(',')
             self._bus.pca9685_manager.setPWM(px, int(sx), 4096-int(sx))
             self._bus.pca9685_manager.setPWM(py, int(sy), 4096-int(sy))
+        except Exception:
+            logger.exception('[%s] - Exception when set_change', self.__class__.__name__)
+        finally:
+            self._bus.i2c_release()
+
+class ServoComponent(JNTComponent):
+    """ A servo component"""
+
+    def __init__(self, bus=None, addr=None, **kwargs):
+        """
+        """
+        oid = kwargs.pop('oid', '%s.servo'%OID)
+        name = kwargs.pop('name', "Servo")
+        product_name = kwargs.pop('product_name', "Servo")
+        product_type = kwargs.pop('product_type', "Servo")
+        product_manufacturer = kwargs.pop('product_manufacturer', "Janitoo")
+        JNTComponent.__init__(self, oid=oid, bus=bus, addr=addr, name=name,
+                product_name=product_name, product_type=product_type, product_manufacturer=product_manufacturer, **kwargs)
+        logger.debug("[%s] - __init__ node uuid:%s", self.__class__.__name__, self.uuid)
+
+        uuid="pulse_min"
+        self.values[uuid] = self.value_factory['config_integer'](options=self.options, uuid=uuid,
+            node_uuid=self.uuid,
+            help='The minimal pulse',
+            label='Pulsemin',
+            default=150,
+        )
+        uuid="pulse_max"
+        self.values[uuid] = self.value_factory['config_integer'](options=self.options, uuid=uuid,
+            node_uuid=self.uuid,
+            help='The maximal pulse',
+            label='Pulsemax',
+            default=600,
+        )
+
+    def translate(self, value, left_min, left_max, right_min=None, right_max=None):
+        """ Translate a value in a range to a value in the  servo's limits
+        """
+        if right_min is None:
+            right_min = self.values['pulse_min'].data
+        if right_max is None:
+           right_max = self.values['pulse_max'].data
+        # Figure out how 'wide' each range is
+        left_span = left_max - left_min
+        right_span = right_max - right_min
+        # Convert the left range into a 0-1 range (float)
+        value_scaled = float(value - left_min) / float(left_span)
+        # Convert the 0-1 range into a value in the right range.
+        return int(right_min + (value_scaled * right_span))
+
+
+    def set_angle(self, node_uuid, index, data):
+        """ Change the angle of the servo
+        """
+        self._bus.i2c_acquire()
+        try:
+            px,py = self.values['nums'].get_data_index(index=index).split(',')
+            if data=="-1,-1":
+                sx,sy = self.values['initial'].get_data_index(index=index).split(',')
+            else:
+                sx,sy = data.split(',')
+            logger.debug('[%s] - set_change of pins %s,%s', self.__class__.__name__, px, py)
+            logger.debug('[%s] - set_change to data %s,%s', self.__class__.__name__, sx, sy)
+            self._bus.pca9685_manager.set_pwm(int(px), int(sx))
+            self._bus.pca9685_manager.set_pwm(int(py), int(sy))
         except Exception:
             logger.exception('[%s] - Exception when set_change', self.__class__.__name__)
         finally:

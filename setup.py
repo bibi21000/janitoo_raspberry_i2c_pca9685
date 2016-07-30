@@ -106,6 +106,7 @@ setup(
             "rpii2c.stepmotor = janitoo_raspberry_i2c_pca9685.pca9685:make_stepmotor",
             "rpii2c.pwm = janitoo_raspberry_i2c_pca9685.pca9685:make_pwm",
             "rpii2c.pan = janitoo_raspberry_i2c_pca9685.pca9685:make_pan",
+            "rpii2c.servo = janitoo_raspberry_i2c_pca9685.pca9685:make_servo",
         ],
         "rpii2c.extensions": [
             "pca9685 = janitoo_raspberry_i2c_pca9685.bus_pca9685:extend",

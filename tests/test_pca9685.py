@@ -67,3 +67,18 @@ class TestPanComponent(JNTTComponent, JNTTComponentCommon):
     """
     component_name = "rpii2c.pan"
 
+class TestServoComponent(JNTTComponent, JNTTComponentCommon):
+    """Test the component
+    """
+    component_name = "rpii2c.servo"
+
+    def test_101_translate(self):
+        entries = iter_entry_points(group='janitoo.components', name=self.component_name)
+        entry = entries.next()
+        mkth = entry.load()
+        compo = mkth()
+        self.assertEqual(compo.translate(1, 1, 10, 1, 100), 1)
+        self.assertEqual(compo.translate(10, 1, 10, 1, 100), 100)
+        self.assertEqual(compo.translate(2, 1, 3, 1, 30), 15)
+        self.assertEqual(compo.translate(3, 1, 5, 1, 100), 50)
+        self.assertEqual(compo.translate(5, 0, 10, 0, 100), 50)
