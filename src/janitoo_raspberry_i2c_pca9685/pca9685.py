@@ -349,8 +349,8 @@ class PanComponent(JNTComponent):
                 sx,sy = data.split(',')
             logger.debug('[%s] - set_change of pins %s,%s', self.__class__.__name__, px, py)
             logger.debug('[%s] - set_change to data %s,%s', self.__class__.__name__, sx, sy)
-            self._bus.pca9685_manager.set_pwm(px, int(sx))
-            self._bus.pca9685_manager.set_pwm(py, int(sy))
+            self._bus.pca9685_manager.set_pwm(int(px), int(sx))
+            self._bus.pca9685_manager.set_pwm(int(py), int(sy))
         except Exception:
             logger.exception('[%s] - Exception when set_change', self.__class__.__name__)
         finally:

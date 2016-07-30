@@ -177,5 +177,6 @@ class Pca9685Manager(Adafruit_MotorHAT):
             raise NameError('PWM pin must be between 0 and 15 inclusive')
         if (value_on < 0) and (value_on > 4096):
             raise NameError('Pin value must be between 0 and 4096!')
-        value_off = 4096 - value_on
-        self._pwm.setPWM(pin, value_on, value_off)
+        #~ value_off = 4096 - value_on
+        #~ self._pwm.setPWM(pin, value_on, value_off)
+        self._pwm.setPWM(pin, 0, value_on)
