@@ -121,6 +121,7 @@ def extend( self ):
         if self.pca9685_manager is not None:
             self.i2c_acquire()
             try:
+                logger.debug("[%s] - Stop the bus %s", self.__class__.__name__, self.oid)
                 self.pca9685_manager.software_reset()
             except Exception:
                 logger.exception('[%s] - Exception when stopping pca9685 board', self.__class__.__name__)
@@ -170,7 +171,7 @@ class Pca9685Manager(Adafruit_MotorHAT):
         """
         self._pwm.softwareReset()
 
-    def set_pwm(self, pin, value_on):
+    def set_pwm(self, pin, value_on, value_off):
         """
         """
         if (pin < 0) or (pin > 15):
@@ -179,4 +180,4 @@ class Pca9685Manager(Adafruit_MotorHAT):
             raise NameError('Pin value must be between 0 and 4096!')
         #~ value_off = 4096 - value_on
         #~ self._pwm.setPWM(pin, value_on, value_off)
-        self._pwm.setPWM(pin, 0, value_on)
+        self._pwm.setPWM(pin, value_on, value_off)

@@ -74,9 +74,6 @@ def make_dcmotor(**kwargs):
 def make_pwm(**kwargs):
     return PwmComponent(**kwargs)
 
-def make_pan(**kwargs):
-    return PanComponent(**kwargs)
-
 def make_stepmotor(**kwargs):
     return StepMotorComponent(**kwargs)
 
@@ -252,7 +249,7 @@ class PwmComponent(JNTComponent):
         uuid="num"
         self.values[uuid] = self.value_factory['config_byte'](options=self.options, uuid=uuid,
             node_uuid=self.uuid,
-            help='The number of the LED on the Hat board. A byte from 1 to 16',
+            help='The number of the LED on the board. A byte from 0 to 15',
             label='Num.',
         )
         uuid="switch"
@@ -302,63 +299,6 @@ class PwmComponent(JNTComponent):
         else:
             logger.warning("[%s] - set_switch unknown data : %s", self.__class__.__name__, data)
 
-class PanComponent(JNTComponent):
-    """ A pan component"""
-
-    def __init__(self, bus=None, addr=None, **kwargs):
-        """
-        """
-        oid = kwargs.pop('oid', '%s.pan'%OID)
-        name = kwargs.pop('name', "Pan & Tilt component")
-        product_name = kwargs.pop('product_name', "Pan & Tilt component")
-        product_type = kwargs.pop('product_type', "Pan & Tilt component")
-        product_manufacturer = kwargs.pop('product_manufacturer', "Janitoo")
-        JNTComponent.__init__(self, oid=oid, bus=bus, addr=addr, name=name,
-                product_name=product_name, product_type=product_type, product_manufacturer=product_manufacturer, **kwargs)
-        logger.debug("[%s] - __init__ node uuid:%s", self.__class__.__name__, self.uuid)
-
-        uuid="initial"
-        self.values[uuid] = self.value_factory['config_string'](options=self.options, uuid=uuid,
-            node_uuid=self.uuid,
-            help="Initial position on (x,y)",
-            label='Init pos',
-            default='0,0',
-        )
-        uuid="nums"
-        self.values[uuid] = self.value_factory['config_string'](options=self.options, uuid=uuid,
-            node_uuid=self.uuid,
-            help='The number of servos on the Hat board (x,y) where x,y is a byte from 1 to 16',
-            label='Num.',
-            default='0,1',
-        )
-        uuid="change"
-        self.values[uuid] = self.value_factory['action_string'](options=self.options, uuid=uuid,
-            node_uuid=self.uuid,
-            set_data_cb=self.set_change,
-        )
-        poll_value = self.values[uuid].create_poll_value(default=300)
-        self.values[poll_value.uuid] = poll_value
-
-    def set_change(self, node_uuid, index, data):
-        """Change the position of the pan
-        """
-        print "!!!!!!!!! set_change"
-        self._bus.i2c_acquire()
-        try:
-            px,py = self.values['nums'].get_data_index(index=index).split(',')
-            if data=="-1,-1":
-                sx,sy = self.values['initial'].get_data_index(index=index).split(',')
-            else:
-                sx,sy = data.split(',')
-            logger.debug('[%s] - set_change of pins %s,%s', self.__class__.__name__, px, py)
-            logger.debug('[%s] - set_change to data %s,%s', self.__class__.__name__, sx, sy)
-            self._bus.pca9685_manager.set_pwm(int(px), int(sx))
-            self._bus.pca9685_manager.set_pwm(int(py), int(sy))
-        except Exception:
-            logger.exception('[%s] - Exception when set_change', self.__class__.__name__)
-        finally:
-            self._bus.i2c_release()
-
 class ServoComponent(JNTComponent):
     """ A servo component"""
 
@@ -373,21 +313,35 @@ class ServoComponent(JNTComponent):
         JNTComponent.__init__(self, oid=oid, bus=bus, addr=addr, name=name,
                 product_name=product_name, product_type=product_type, product_manufacturer=product_manufacturer, **kwargs)
         logger.debug("[%s] - __init__ node uuid:%s", self.__class__.__name__, self.uuid)
-
+        uuid="num"
+        self.values[uuid] = self.value_factory['config_byte'](options=self.options, uuid=uuid,
+            node_uuid=self.uuid,
+            help='The number of the servo on board. A byte from 0 to 15',
+            label='Num.',
+        )
         uuid="pulse_min"
         self.values[uuid] = self.value_factory['config_integer'](options=self.options, uuid=uuid,
             node_uuid=self.uuid,
             help='The minimal pulse',
             label='Pulsemin',
-            default=150,
+            default=200,
         )
         uuid="pulse_max"
         self.values[uuid] = self.value_factory['config_integer'](options=self.options, uuid=uuid,
             node_uuid=self.uuid,
             help='The maximal pulse',
             label='Pulsemax',
-            default=600,
+            default=700,
         )
+        uuid="angle"
+        self.values[uuid] = self.value_factory['action_string'](options=self.options, uuid=uuid,
+            node_uuid=self.uuid,
+            set_data_cb=self.set_angle,
+            help='Set the angle of the servo. Format is value|angle_min|angle_max',
+            label='angle',
+        )
+        poll_value = self.values[uuid].create_poll_value(default=300)
+        self.values[poll_value.uuid] = poll_value
 
     def translate(self, value, left_min, left_max, right_min=None, right_max=None):
         """ Translate a value in a range to a value in the  servo's limits
@@ -404,22 +358,19 @@ class ServoComponent(JNTComponent):
         # Convert the 0-1 range into a value in the right range.
         return int(right_min + (value_scaled * right_span))
 
-
-    def set_angle(self, node_uuid, index, data):
+    def set_angle(self, node_uuid, index, data, pin=None):
         """ Change the angle of the servo
         """
         self._bus.i2c_acquire()
         try:
-            px,py = self.values['nums'].get_data_index(index=index).split(',')
-            if data=="-1,-1":
-                sx,sy = self.values['initial'].get_data_index(index=index).split(',')
-            else:
-                sx,sy = data.split(',')
-            logger.debug('[%s] - set_change of pins %s,%s', self.__class__.__name__, px, py)
-            logger.debug('[%s] - set_change to data %s,%s', self.__class__.__name__, sx, sy)
-            self._bus.pca9685_manager.set_pwm(int(px), int(sx))
-            self._bus.pca9685_manager.set_pwm(int(py), int(sy))
+            if pin is None:
+                pin = self.values['num'].data
+            angle, angle_min, angle_max = data.split('|')
+            value = self.translate(float(angle), float(angle_min), float(angle_max))
+            logger.debug('[%s] - set_angle on pin %s to %s', self.__class__.__name__, pin, angle)
+            self._bus.pca9685_manager.set_pwm(pin, 0, value)
+            self.values['angle']._data = data
         except Exception:
-            logger.exception('[%s] - Exception when set_change', self.__class__.__name__)
+            logger.exception('[%s] - Exception when set_angle', self.__class__.__name__)
         finally:
             self._bus.i2c_release()

@@ -56,7 +56,7 @@ data_files_config(data_files, 'docs','src/docs/','*')
 
 setup(
     name = 'janitoo_raspberry_i2c_pca9685',
-    description = "Manage PWM outputs of a pca9685 (like adafruit motor ha with Janitoo",
+    description = "Manage PWM outputs of a pca9685 (like adafruit motor hat with Janitoo",
     long_description = """Provides components for DC motor, stepper motor and pwm raw outputs.
     See https://github.com/adafruit/Adafruit-Motor-HAT-Python-Library
     """,
@@ -105,7 +105,6 @@ setup(
             "rpii2c.dcmotor = janitoo_raspberry_i2c_pca9685.pca9685:make_dcmotor",
             "rpii2c.stepmotor = janitoo_raspberry_i2c_pca9685.pca9685:make_stepmotor",
             "rpii2c.pwm = janitoo_raspberry_i2c_pca9685.pca9685:make_pwm",
-            "rpii2c.pan = janitoo_raspberry_i2c_pca9685.pca9685:make_pan",
             "rpii2c.servo = janitoo_raspberry_i2c_pca9685.pca9685:make_servo",
         ],
         "rpii2c.extensions": [
