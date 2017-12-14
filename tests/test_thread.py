@@ -74,8 +74,8 @@ class TestPca9685Thread(JNTTThreadRun, JNTTThreadRunCommon):
             while i< timeout and not self.thread.nodeman.is_started:
                 time.sleep(1)
                 i += 1
-                print self.thread.nodeman.state
-            print self.thread.bus.nodeman.nodes
+                print(self.thread.nodeman.state)
+            print(self.thread.bus.nodeman.nodes)
             time.sleep(5)
             self.assertTrue(self.thread.nodeman.is_started)
             self.assertNotEqual(None, self.thread.bus.nodeman.find_node('servo'))
