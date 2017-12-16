@@ -106,7 +106,7 @@ def extend( self ):
         logger.debug("[%s] - Start the bus %s on address %s", self.__class__.__name__, self.oid, self.values["%s_addr"%OID].data )
         self.i2c_acquire()
         try:
-            self.pca9685_manager = Pca9685Manager(addr=self.values["%s_addr"%OID].data, freq=self.values["%s_freqency"%OID].data)
+            self.pca9685_manager = Pca9685Manager(addr=self.values["%s_addr"%OID].data, freq=self.values["%s_freqency"%OID].data, busnum=self.get_busnum())
         except Exception:
             logger.exception('[%s] - Exception when intialising pca9685 board', self.__class__.__name__)
         finally:
@@ -139,7 +139,7 @@ class Pca9685Manager(Adafruit_MotorHAT):
     Maybe we must control the pin use (ie to not activate a led on the
     """
 
-    def __init__(self, addr = 0x40, freq = 1600):
+    def __init__(self, addr = 0x40, freq = 1600, busnum=None):
         """Init
         """
         self._i2caddr = addr        # default addr
@@ -147,7 +147,7 @@ class Pca9685Manager(Adafruit_MotorHAT):
         self._motors = None
         self._steppers = None
         self._leds = None
-        self._pwm = PWM(addr, debug=False)
+        self._pwm = PWM(address=addr, i2c_bus=busnum)
         self._pwm.setPWMFreq(self._frequency)
 
     @property
@@ -170,14 +170,3 @@ class Pca9685Manager(Adafruit_MotorHAT):
         """
         """
         self._pwm.softwareReset()
-
-    def set_pwm(self, pin, value_on, value_off):
-        """
-        """
-        if (pin < 0) or (pin > 15):
-            raise NameError('PWM pin must be between 0 and 15 inclusive')
-        if (value_on < 0) and (value_on > 4096):
-            raise NameError('Pin value must be between 0 and 4096!')
-        #~ value_off = 4096 - value_on
-        #~ self._pwm.setPWM(pin, value_on, value_off)
-        self._pwm.setPWM(pin, value_on, value_off)
