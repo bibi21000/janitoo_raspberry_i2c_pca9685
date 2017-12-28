@@ -5,13 +5,11 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>janitoo_raspberry_i2c_pca9685.bus_pca9685 &mdash; janitoo_raspberry_i2c_pca9685 0.0.7 documentation</title>
+    <title>janitoo_raspberry_i2c_pca9685.bus_pca9685 &#8212; janitoo_raspberry_i2c_pca9685 0.0.7 documentation</title>
     
-    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/sphinxcontrib-images/LightBox2/lightbox2/css/lightbox.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/bootswatch-3.3.4/united/bootstrap.min.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -19,7 +17,8 @@
         VERSION:     '0.0.7',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
@@ -30,17 +29,17 @@
     <script type="text/javascript" src="../../_static/sphinxcontrib-images/LightBox2/lightbox2-customize/jquery-noconflict.js"></script>
     <script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="janitoo_raspberry_i2c_pca9685 0.0.7 documentation" href="../../index.html" />
-    <link rel="up" title="Module code" href="../index.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-inverse navbar-default navbar-fixed-top">
     <div class="container">
@@ -110,7 +109,7 @@
     <div class="col-md-12 content">
       
   <h1>Source code for janitoo_raspberry_i2c_pca9685.bus_pca9685</h1><div class="highlight"><pre>
-<span class="c"># -*- coding: utf-8 -*-</span>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;The Raspberry camera worker</span>
 
 <span class="sd">Installation :</span>
@@ -121,175 +120,167 @@
 
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="n">__license__</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
-<span class="s">    This file is part of Janitoo.</span>
+<span class="n">__license__</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    This file is part of Janitoo.</span>
 
-<span class="s">    Janitoo is free software: you can redistribute it and/or modify</span>
-<span class="s">    it under the terms of the GNU General Public License as published by</span>
-<span class="s">    the Free Software Foundation, either version 3 of the License, or</span>
-<span class="s">    (at your option) any later version.</span>
+<span class="s2">    Janitoo is free software: you can redistribute it and/or modify</span>
+<span class="s2">    it under the terms of the GNU General Public License as published by</span>
+<span class="s2">    the Free Software Foundation, either version 3 of the License, or</span>
+<span class="s2">    (at your option) any later version.</span>
 
-<span class="s">    Janitoo is distributed in the hope that it will be useful,</span>
-<span class="s">    but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
-<span class="s">    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
-<span class="s">    GNU General Public License for more details.</span>
+<span class="s2">    Janitoo is distributed in the hope that it will be useful,</span>
+<span class="s2">    but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="s2">    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="s2">    GNU General Public License for more details.</span>
 
-<span class="s">    You should have received a copy of the GNU General Public License</span>
-<span class="s">    along with Janitoo. If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="s2">    You should have received a copy of the GNU General Public License</span>
+<span class="s2">    along with Janitoo. If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 
-<span class="s">&quot;&quot;&quot;</span>
-<span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;Sébastien GALLET aka bibi21000&#39;</span>
-<span class="n">__email__</span> <span class="o">=</span> <span class="s">&#39;bibi21000@gmail.com&#39;</span>
-<span class="n">__copyright__</span> <span class="o">=</span> <span class="s">&quot;Copyright © 2013-2014-2015-2016 Sébastien GALLET aka bibi21000&quot;</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">__author__</span> <span class="o">=</span> <span class="s1">&#39;Sébastien GALLET aka bibi21000&#39;</span>
+<span class="n">__email__</span> <span class="o">=</span> <span class="s1">&#39;bibi21000@gmail.com&#39;</span>
+<span class="n">__copyright__</span> <span class="o">=</span> <span class="s2">&quot;Copyright © 2013-2014-2015-2016 Sébastien GALLET aka bibi21000&quot;</span>
 
-<span class="c"># Set default logging handler to avoid &quot;No handler found&quot; warnings.</span>
+<span class="c1"># Set default logging handler to avoid &quot;No handler found&quot; warnings.</span>
 <span class="kn">import</span> <span class="nn">logging</span>
-<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 <span class="k">try</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">Adafruit_MotorHAT</span> <span class="kn">import</span> <span class="n">Adafruit_MotorHAT</span><span class="p">,</span> <span class="n">Adafruit_StepperMotor</span><span class="p">,</span> <span class="n">Adafruit_DCMotor</span>
-    <span class="kn">from</span> <span class="nn">Adafruit_MotorHAT.Adafruit_PWM_Servo_Driver</span> <span class="kn">import</span> <span class="n">PWM</span>
+    <span class="kn">from</span> <span class="nn">Adafruit_MotorHAT</span> <span class="k">import</span> <span class="n">Adafruit_MotorHAT</span><span class="p">,</span> <span class="n">Adafruit_StepperMotor</span><span class="p">,</span> <span class="n">Adafruit_DCMotor</span>
+    <span class="kn">from</span> <span class="nn">Adafruit_MotorHAT.Adafruit_PWM_Servo_Driver</span> <span class="k">import</span> <span class="n">PWM</span>
 <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
 
-<div class="viewcode-block" id="Adafruit_MotorHAT"><a class="viewcode-back" href="../../api/index.html#janitoo_raspberry_i2c_pca9685.bus_pca9685.Adafruit_MotorHAT">[docs]</a>    <span class="k">class</span> <span class="nc">Adafruit_MotorHAT</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Adafruit_MotorHAT</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Fake class to allow buil on Continuous Integration tools.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
-</div>
-<div class="viewcode-block" id="Adafruit_StepperMotor"><a class="viewcode-back" href="../../api/index.html#janitoo_raspberry_i2c_pca9685.bus_pca9685.Adafruit_StepperMotor">[docs]</a>    <span class="k">class</span> <span class="nc">Adafruit_StepperMotor</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Fake class to allow buil on Continuous Integration tools.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">pass</span>
-</div>
-<div class="viewcode-block" id="Adafruit_DCMotor"><a class="viewcode-back" href="../../api/index.html#janitoo_raspberry_i2c_pca9685.bus_pca9685.Adafruit_DCMotor">[docs]</a>    <span class="k">class</span> <span class="nc">Adafruit_DCMotor</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Fake class to allow buil on Continuous Integration tools.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">pass</span>
-</div>
-<div class="viewcode-block" id="PWM"><a class="viewcode-back" href="../../api/index.html#janitoo_raspberry_i2c_pca9685.bus_pca9685.PWM">[docs]</a>    <span class="k">class</span> <span class="nc">PWM</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Fake class to allow buil on Continuous Integration tools.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">pass</span>
-</div>
-    <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s">&quot;Can&#39;t import Adafruit_MotorHAT&quot;</span><span class="p">)</span>
 
-<span class="c">##############################################################</span>
-<span class="c">#Check that we are in sync with the official command classes</span>
-<span class="c">#Must be implemented for non-regression</span>
-<span class="kn">from</span> <span class="nn">janitoo.classes</span> <span class="kn">import</span> <span class="n">COMMAND_DESC</span>
+    <span class="k">class</span> <span class="nc">Adafruit_StepperMotor</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Fake class to allow buil on Continuous Integration tools.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+    <span class="k">class</span> <span class="nc">Adafruit_DCMotor</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Fake class to allow buil on Continuous Integration tools.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+    <span class="k">class</span> <span class="nc">PWM</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Fake class to allow buil on Continuous Integration tools.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Can&#39;t import Adafruit_MotorHAT&quot;</span><span class="p">)</span>
+
+<span class="c1">##############################################################</span>
+<span class="c1">#Check that we are in sync with the official command classes</span>
+<span class="c1">#Must be implemented for non-regression</span>
+<span class="kn">from</span> <span class="nn">janitoo.classes</span> <span class="k">import</span> <span class="n">COMMAND_DESC</span>
 
 <span class="n">COMMAND_CAMERA_PREVIEW</span> <span class="o">=</span> <span class="mh">0x2200</span>
 <span class="n">COMMAND_CAMERA_PHOTO</span> <span class="o">=</span> <span class="mh">0x2201</span>
 <span class="n">COMMAND_CAMERA_VIDEO</span> <span class="o">=</span> <span class="mh">0x2202</span>
 <span class="n">COMMAND_CAMERA_STREAM</span> <span class="o">=</span> <span class="mh">0x2203</span>
 
-<span class="k">assert</span><span class="p">(</span><span class="n">COMMAND_DESC</span><span class="p">[</span><span class="n">COMMAND_CAMERA_PREVIEW</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;COMMAND_CAMERA_PREVIEW&#39;</span><span class="p">)</span>
-<span class="k">assert</span><span class="p">(</span><span class="n">COMMAND_DESC</span><span class="p">[</span><span class="n">COMMAND_CAMERA_PHOTO</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;COMMAND_CAMERA_PHOTO&#39;</span><span class="p">)</span>
-<span class="k">assert</span><span class="p">(</span><span class="n">COMMAND_DESC</span><span class="p">[</span><span class="n">COMMAND_CAMERA_VIDEO</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;COMMAND_CAMERA_VIDEO&#39;</span><span class="p">)</span>
-<span class="k">assert</span><span class="p">(</span><span class="n">COMMAND_DESC</span><span class="p">[</span><span class="n">COMMAND_CAMERA_STREAM</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;COMMAND_CAMERA_STREAM&#39;</span><span class="p">)</span>
-<span class="c">##############################################################</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">COMMAND_DESC</span><span class="p">[</span><span class="n">COMMAND_CAMERA_PREVIEW</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;COMMAND_CAMERA_PREVIEW&#39;</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">COMMAND_DESC</span><span class="p">[</span><span class="n">COMMAND_CAMERA_PHOTO</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;COMMAND_CAMERA_PHOTO&#39;</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">COMMAND_DESC</span><span class="p">[</span><span class="n">COMMAND_CAMERA_VIDEO</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;COMMAND_CAMERA_VIDEO&#39;</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">COMMAND_DESC</span><span class="p">[</span><span class="n">COMMAND_CAMERA_STREAM</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;COMMAND_CAMERA_STREAM&#39;</span><span class="p">)</span>
+<span class="c1">##############################################################</span>
 
-<span class="kn">from</span> <span class="nn">janitoo_raspberry_i2c</span> <span class="kn">import</span> <span class="n">OID</span>
+<span class="kn">from</span> <span class="nn">janitoo_raspberry_i2c</span> <span class="k">import</span> <span class="n">OID</span>
 
 <div class="viewcode-block" id="extend"><a class="viewcode-back" href="../../api/index.html#janitoo_raspberry_i2c_pca9685.bus_pca9685.extend">[docs]</a><span class="k">def</span> <span class="nf">extend</span><span class="p">(</span> <span class="bp">self</span> <span class="p">):</span>
 
-    <span class="n">uuid</span><span class="o">=</span><span class="s">&quot;</span><span class="si">%s</span><span class="s">_addr&quot;</span><span class="o">%</span><span class="n">OID</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">uuid</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">value_factory</span><span class="p">[</span><span class="s">&#39;config_integer&#39;</span><span class="p">](</span><span class="n">options</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">,</span> <span class="n">uuid</span><span class="o">=</span><span class="n">uuid</span><span class="p">,</span>
+    <span class="n">uuid</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">_addr&quot;</span><span class="o">%</span><span class="n">OID</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">uuid</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">value_factory</span><span class="p">[</span><span class="s1">&#39;config_integer&#39;</span><span class="p">](</span><span class="n">options</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">,</span> <span class="n">uuid</span><span class="o">=</span><span class="n">uuid</span><span class="p">,</span>
         <span class="n">node_uuid</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">uuid</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s">&#39;The I2C address of the pca9685 board&#39;</span><span class="p">,</span>
-        <span class="n">label</span><span class="o">=</span><span class="s">&#39;Addr&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;The I2C address of the pca9685 board&#39;</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Addr&#39;</span><span class="p">,</span>
         <span class="n">default</span><span class="o">=</span><span class="mh">0x40</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="n">uuid</span><span class="o">=</span><span class="s">&quot;</span><span class="si">%s</span><span class="s">_freqency&quot;</span><span class="o">%</span><span class="n">OID</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">uuid</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">value_factory</span><span class="p">[</span><span class="s">&#39;config_integer&#39;</span><span class="p">](</span><span class="n">options</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">,</span> <span class="n">uuid</span><span class="o">=</span><span class="n">uuid</span><span class="p">,</span>
+    <span class="n">uuid</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">_freqency&quot;</span><span class="o">%</span><span class="n">OID</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">uuid</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">value_factory</span><span class="p">[</span><span class="s1">&#39;config_integer&#39;</span><span class="p">](</span><span class="n">options</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">,</span> <span class="n">uuid</span><span class="o">=</span><span class="n">uuid</span><span class="p">,</span>
         <span class="n">node_uuid</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">uuid</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s">&#39;The frequency for pwm&#39;</span><span class="p">,</span>
-        <span class="n">label</span><span class="o">=</span><span class="s">&#39;Freq.&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;The frequency for pwm&#39;</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Freq.&#39;</span><span class="p">,</span>
         <span class="n">default</span><span class="o">=</span><span class="mi">1600</span><span class="p">,</span>
-        <span class="n">units</span><span class="o">=</span><span class="s">&quot;Hz&quot;</span><span class="p">,</span>
+        <span class="n">units</span><span class="o">=</span><span class="s2">&quot;Hz&quot;</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_pca9685_manager</span> <span class="o">=</span> <span class="bp">None</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">export_attrs</span><span class="p">(</span><span class="s">&#39;_pca9685_manager&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pca9685_manager</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">export_values</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">pca9685_manager</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">export_attrs</span><span class="p">(</span><span class="s1">&#39;pca9685_manager&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pca9685_manager</span><span class="p">)</span>
 
-    <span class="bp">self</span><span class="o">.</span><span class="n">_pca9865_start</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">start</span>
-    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="n">mqttc</span><span class="p">,</span> <span class="n">trigger_thread_reload_cb</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_pca9685_start</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">start</span>
+    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="n">mqttc</span><span class="p">,</span> <span class="n">trigger_thread_reload_cb</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Start the bus&quot;&quot;&quot;</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;[</span><span class="si">%s</span><span class="s">] - Start the bus </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">oid</span> <span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;[</span><span class="si">%s</span><span class="s2">] - Start the bus </span><span class="si">%s</span><span class="s2"> on address </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">oid</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">_addr&quot;</span><span class="o">%</span><span class="n">OID</span><span class="p">]</span><span class="o">.</span><span class="n">data</span> <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">i2c_acquire</span><span class="p">()</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_pca9685_manager</span> <span class="o">=</span> <span class="n">Pca9685Manager</span><span class="p">(</span><span class="n">addr</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="s">&quot;</span><span class="si">%s</span><span class="s">_addr&quot;</span><span class="o">%</span><span class="n">OID</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="s">&quot;</span><span class="si">%s</span><span class="s">_freqency&quot;</span><span class="o">%</span><span class="n">OID</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pca9685_manager</span> <span class="o">=</span> <span class="n">Pca9685Manager</span><span class="p">(</span><span class="n">addr</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">_addr&quot;</span><span class="o">%</span><span class="n">OID</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">_freqency&quot;</span><span class="o">%</span><span class="n">OID</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">busnum</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_busnum</span><span class="p">())</span>
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s">&#39;[</span><span class="si">%s</span><span class="s">] - Exception when intialising pca9685 board&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s1">&#39;[</span><span class="si">%s</span><span class="s1">] - Exception when intialising pca9685 board&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
         <span class="k">finally</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">i2c_release</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">update_attrs</span><span class="p">(</span><span class="s">&#39;_pca9685_manager&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pca9685_manager</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pca9865_start</span><span class="p">(</span><span class="n">mqttc</span><span class="p">,</span> <span class="n">trigger_thread_reload_cb</span><span class="o">=</span><span class="n">trigger_thread_reload_cb</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_attrs</span><span class="p">(</span><span class="s1">&#39;pca9685_manager&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pca9685_manager</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pca9685_start</span><span class="p">(</span><span class="n">mqttc</span><span class="p">,</span> <span class="n">trigger_thread_reload_cb</span><span class="o">=</span><span class="n">trigger_thread_reload_cb</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">start</span> <span class="o">=</span> <span class="n">start</span>
 
-    <span class="bp">self</span><span class="o">.</span><span class="n">_pca9865_stop</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_pca9685_stop</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop</span>
     <span class="k">def</span> <span class="nf">stop</span><span class="p">():</span>
         <span class="sd">&quot;&quot;&quot;Stop the bus&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pca9685_manager</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pca9685_manager</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">i2c_acquire</span><span class="p">()</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_pca9685_manager</span><span class="o">.</span><span class="n">software_reset</span><span class="p">()</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;[</span><span class="si">%s</span><span class="s2">] - Stop the bus </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">oid</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">pca9685_manager</span><span class="o">.</span><span class="n">software_reset</span><span class="p">()</span>
             <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s">&#39;[</span><span class="si">%s</span><span class="s">] - Exception when stopping pca9685 board&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s1">&#39;[</span><span class="si">%s</span><span class="s1">] - Exception when stopping pca9685 board&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
             <span class="k">finally</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">i2c_release</span><span class="p">()</span>
-        <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pca9865_stop</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_pca9685_manager</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">update_attrs</span><span class="p">(</span><span class="s">&#39;_pca9685_manager&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pca9685_manager</span><span class="p">)</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pca9685_stop</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pca9685_manager</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_attrs</span><span class="p">(</span><span class="s1">&#39;pca9685_manager&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pca9685_manager</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ret</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="o">=</span><span class="n">stop</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="o">=</span><span class="n">stop</span></div>
 
-</div>
+
 <div class="viewcode-block" id="Pca9685Manager"><a class="viewcode-back" href="../../api/index.html#janitoo_raspberry_i2c_pca9685.bus_pca9685.Pca9685Manager">[docs]</a><span class="k">class</span> <span class="nc">Pca9685Manager</span><span class="p">(</span><span class="n">Adafruit_MotorHAT</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;To share bus with the adafruit library.</span>
 <span class="sd">    Maybe we must control the pin use (ie to not activate a led on the</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">addr</span> <span class="o">=</span> <span class="mh">0x40</span><span class="p">,</span> <span class="n">freq</span> <span class="o">=</span> <span class="mi">1600</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">addr</span> <span class="o">=</span> <span class="mh">0x40</span><span class="p">,</span> <span class="n">freq</span> <span class="o">=</span> <span class="mi">1600</span><span class="p">,</span> <span class="n">busnum</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Init</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_i2caddr</span> <span class="o">=</span> <span class="n">addr</span>        <span class="c"># default addr</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_frequency</span> <span class="o">=</span> <span class="n">freq</span>      <span class="c"># default @1600Hz PWM freq</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_motors</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_steppers</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_leds</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_pwm</span> <span class="o">=</span> <span class="n">PWM</span><span class="p">(</span><span class="n">addr</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_i2caddr</span> <span class="o">=</span> <span class="n">addr</span>        <span class="c1"># default addr</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_frequency</span> <span class="o">=</span> <span class="n">freq</span>      <span class="c1"># default @1600Hz PWM freq</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_motors</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_steppers</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_leds</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pwm</span> <span class="o">=</span> <span class="n">PWM</span><span class="p">(</span><span class="n">address</span><span class="o">=</span><span class="n">addr</span><span class="p">,</span> <span class="n">i2c_bus</span><span class="o">=</span><span class="n">busnum</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_pwm</span><span class="o">.</span><span class="n">setPWMFreq</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_frequency</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-<div class="viewcode-block" id="Pca9685Manager.motors"><a class="viewcode-back" href="../../api/index.html#janitoo_raspberry_i2c_pca9685.bus_pca9685.Pca9685Manager.motors">[docs]</a>    <span class="k">def</span> <span class="nf">motors</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">motors</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_motors</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_motors</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_motors</span> <span class="o">=</span> <span class="p">[</span> <span class="n">Adafruit_DCMotor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="p">]</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_motors</span>
-</div>
+
     <span class="nd">@property</span>
-<div class="viewcode-block" id="Pca9685Manager.steppers"><a class="viewcode-back" href="../../api/index.html#janitoo_raspberry_i2c_pca9685.bus_pca9685.Pca9685Manager.steppers">[docs]</a>    <span class="k">def</span> <span class="nf">steppers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">steppers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_steppers</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_steppers</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_steppers</span> <span class="o">=</span> <span class="p">[</span> <span class="n">Adafruit_StepperMotor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">Adafruit_StepperMotor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="p">]</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_steppers</span>
-</div>
+
 <div class="viewcode-block" id="Pca9685Manager.software_reset"><a class="viewcode-back" href="../../api/index.html#janitoo_raspberry_i2c_pca9685.bus_pca9685.Pca9685Manager.software_reset">[docs]</a>    <span class="k">def</span> <span class="nf">software_reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_pwm</span><span class="o">.</span><span class="n">softwareReset</span><span class="p">()</span>
-</div>
-<div class="viewcode-block" id="Pca9685Manager.setPwm"><a class="viewcode-back" href="../../api/index.html#janitoo_raspberry_i2c_pca9685.bus_pca9685.Pca9685Manager.setPwm">[docs]</a>    <span class="k">def</span> <span class="nf">setPwm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pin</span><span class="p">,</span> <span class="n">value_on</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">pin</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">pin</span> <span class="o">&gt;</span> <span class="mi">15</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">NameError</span><span class="p">(</span><span class="s">&#39;PWM pin must be between 0 and 15 inclusive&#39;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">value_on</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">value_on</span> <span class="o">&gt;</span> <span class="mi">4096</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">NameError</span><span class="p">(</span><span class="s">&#39;Pin value must be between 0 and 4096!&#39;</span><span class="p">)</span>
-        <span class="n">value_off</span> <span class="o">=</span> <span class="mi">4096</span> <span class="o">-</span> <span class="n">value_on</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_pwm</span><span class="o">.</span><span class="n">setPWM</span><span class="p">(</span><span class="n">pin</span><span class="p">,</span> <span class="n">value_on</span><span class="p">,</span> <span class="n">value_off</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pwm</span><span class="o">.</span><span class="n">softwareReset</span><span class="p">()</span></div></div>
 </pre></div>
 
     </div>
@@ -304,7 +295,7 @@
     </p>
     <p>
         &copy; Copyright 2014,2015,2016 Sébastien GALLET aka bibi2100 &lt;bibi21000@gmail.com&gt;.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.3.<br/>
     </p>
   </div>
 </footer>
